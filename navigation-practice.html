@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation Menu Practice - Tailwind CSS</title>
+    <link href="./src/input.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+
+    <!-- Page Header -->
+    <div class="bg-white border-b-8 border-gray-200 py-6  ">
+        <div class="bg-gray-300 max-w-7xl mx-auto px-4">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">導航選單練習</h1>
+            <p class="text-gray-600">學習 Flexbox、互動狀態和響應式設計</p>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 pb-20 space-y-16">
+
+        <!-- Example 1: Basic Navbar -->
+        <section class="space-y-4">
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">1. 基礎導航列</h2>
+                <p class="text-gray-600 mb-4">學習重點：<code class="bg-gray-200 px-2 py-1 rounded">flex</code>、<code class="bg-gray-200 px-2 py-1 rounded">items-center</code>、<code class="bg-gray-200 px-2 py-1 rounded">space-x-*</code></p>
+            </div>
+
+            <!-- Demo -->
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <nav class="bg-indigo-600 px-6 py-4">
+                    <!-- flex: 建立彈性容器 -->
+                    <!-- items-center: 垂直置中對齊 -->
+                    <!-- space-x-6: 子元素之間水平間距 1.5rem -->
+                    <ul class="flex items-center space-x-6">
+                        <li><a href="#" class="text-white hover:text-indigo-200 transition">首頁</a></li>
+                        <li><a href="#" class="text-white hover:text-indigo-200 transition">關於</a></li>
+                        <li><a href="#" class="text-white hover:text-indigo-200 transition">服務</a></li>
+                        <li><a href="#" class="text-white hover:text-indigo-200 transition">聯絡</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- Code Explanation -->
+            <div class="bg-gray-800 text-gray-100 p-4 rounded-lg text-sm">
+                <pre class="overflow-x-auto"><code>&lt;nav class="bg-indigo-600 px-6 py-4"&gt;
+  &lt;ul class="flex items-center space-x-6"&gt;
+    &lt;li&gt;&lt;a href="#" class="text-white hover:text-indigo-200 transition"&gt;首頁&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#" class="text-white hover:text-indigo-200 transition"&gt;關於&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- Example 2: Navbar with Logo and Button -->
+        <section class="space-y-4">
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">2. 帶 Logo 和按鈕的導航列</h2>
+                <p class="text-gray-600 mb-4">學習重點：<code class="bg-gray-200 px-2 py-1 rounded">justify-between</code>、<code class="bg-gray-200 px-2 py-1 rounded">gap-*</code></p>
+            </div>
+
+            <!-- Demo -->
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <nav class="bg-white border-b border-gray-200 px-6 py-4">
+                    <!-- justify-between: 左右分散對齊 -->
+                    <div class="flex items-center justify-between">
+                        <!-- Logo -->
+                        <div class="text-2xl font-bold text-indigo-600">MyBrand</div>
+
+                        <!-- Navigation Links -->
+                        <!-- gap-6: 使用 gap 替代 space-x (更現代的做法) -->
+                        <ul class="flex items-center gap-6">
+                            <li><a href="#" class="text-gray-700 hover:text-indigo-600 font-medium transition">產品</a></li>
+                            <li><a href="#" class="text-gray-700 hover:text-indigo-600 font-medium transition">功能</a></li>
+                            <li><a href="#" class="text-gray-700 hover:text-indigo-600 font-medium transition">定價</a></li>
+                        </ul>
+
+                        <!-- CTA Button -->
+                        <!-- hover:bg-indigo-700: hover 狀態改變背景色 -->
+                        <!-- transition: 平滑過渡效果 -->
+                        <button class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition font-medium">
+                            登入
+                        </button>
+                    </div>
+                </nav>
+            </div>
+
+            <!-- Code Explanation -->
+            <div class="bg-gray-800 text-gray-100 p-4 rounded-lg text-sm">
+                <pre class="overflow-x-auto"><code>&lt;div class="flex items-center justify-between"&gt;
+  &lt;div class="text-2xl font-bold text-indigo-600"&gt;MyBrand&lt;/div&gt;
+
+  &lt;ul class="flex items-center gap-6"&gt;
+    &lt;li&gt;&lt;a href="#" class="text-gray-700 hover:text-indigo-600"&gt;產品&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+
+  &lt;button class="bg-indigo-600 hover:bg-indigo-700 transition"&gt;登入&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- Example 3: Navbar with Multiple Styles -->
+        <section class="space-y-4">
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">3. 不同風格的導航列</h2>
+                <p class="text-gray-600 mb-4">學習重點：顏色變化、陰影效果、互動狀態</p>
+            </div>
+
+            <!-- Demo 1: Dark Theme -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold text-gray-700">深色主題</h3>
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                    <nav class="bg-gray-900 px-6 py-4">
+                        <div class="flex items-center justify-between">
+                            <div class="text-2xl font-bold text-white">DarkNav</div>
+                            <ul class="flex items-center gap-6">
+                                <!-- active 狀態：bg-gray-800 表示目前所在頁面 -->
+                                <li><a href="#" class="text-white bg-gray-800 px-4 py-2 rounded-lg">首頁</a></li>
+                                <li><a href="#" class="text-gray-300 hover:text-white hover:bg-gray-800 px-4 py-2 rounded-lg transition">探索</a></li>
+                                <li><a href="#" class="text-gray-300 hover:text-white hover:bg-gray-800 px-4 py-2 rounded-lg transition">趨勢</a></li>
+                            </ul>
+                            <div class="flex items-center gap-4">
+                                <button class="text-gray-300 hover:text-white transition">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                    </svg>
+                                </button>
+                                <button class="text-gray-300 hover:text-white transition">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Demo 2: Light with Shadow -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold text-gray-700">淺色主題 + 陰影</h3>
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <nav class="bg-white px-6 py-4 shadow-md">
+                        <div class="flex items-center justify-between">
+                            <div class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                                GradientBrand
+                            </div>
+                            <ul class="flex items-center gap-2">
+                                <li>
+                                    <!-- focus:ring-2: focus 時顯示環形外框 -->
+                                    <!-- focus:ring-purple-300: 外框顏色 -->
+                                    <a href="#" class="text-gray-700 hover:text-purple-600 px-4 py-2 rounded-lg hover:bg-purple-50 transition focus:ring-2 focus:ring-purple-300">
+                                        首頁
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-gray-700 hover:text-purple-600 px-4 py-2 rounded-lg hover:bg-purple-50 transition focus:ring-2 focus:ring-purple-300">
+                                        服務
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-gray-700 hover:text-purple-600 px-4 py-2 rounded-lg hover:bg-purple-50 transition focus:ring-2 focus:ring-purple-300">
+                                        作品集
+                                    </a>
+                                </li>
+                            </ul>
+                            <button class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-2 rounded-lg hover:from-purple-700 hover:to-pink-700 transition shadow-md">
+                                開始使用
+                            </button>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </section>
+
+        <!-- Example 4: Responsive Navbar -->
+        <section class="space-y-4">
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">4. 響應式導航列（手機版）</h2>
+                <p class="text-gray-600 mb-4">學習重點：<code class="bg-gray-200 px-2 py-1 rounded">hidden</code>、<code class="bg-gray-200 px-2 py-1 rounded">md:flex</code>、<code class="bg-gray-200 px-2 py-1 rounded">md:hidden</code></p>
+                <p class="text-sm text-amber-600 bg-amber-50 border border-amber-200 rounded-lg px-4 py-2">
+                    💡 提示：縮小瀏覽器視窗到手機尺寸（&lt; 768px）看效果！桌面版會顯示所有選單，手機版顯示漢堡圖示。
+                </p>
+            </div>
+
+            <!-- Demo -->
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <nav class="bg-indigo-600 px-6 py-4">
+                    <div class="flex items-center justify-between">
+                        <!-- Logo -->
+                        <div class="text-2xl font-bold text-white">ResponsiveNav</div>
+
+                        <!-- Desktop Navigation (hidden on mobile, flex on md+) -->
+                        <!-- hidden: 預設隱藏 (手機版) -->
+                        <!-- md:flex: 在 md 斷點以上顯示為 flex -->
+                        <ul class="hidden md:flex items-center gap-6">
+                            <li><a href="#" class="text-white hover:text-indigo-200 transition">首頁</a></li>
+                            <li><a href="#" class="text-white hover:text-indigo-200 transition">關於我們</a></li>
+                            <li><a href="#" class="text-white hover:text-indigo-200 transition">服務項目</a></li>
+                            <li><a href="#" class="text-white hover:text-indigo-200 transition">聯絡我們</a></li>
+                        </ul>
+
+                        <!-- Desktop Button -->
+                        <button class="hidden md:block bg-white text-indigo-600 px-6 py-2 rounded-lg hover:bg-indigo-50 transition font-medium">
+                            登入
+                        </button>
+
+                        <!-- Mobile Menu Button (visible on mobile, hidden on md+) -->
+                        <!-- md:hidden: 在 md 斷點以上隱藏 -->
+                        <button class="md:hidden text-white">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Mobile Menu (normally would be toggled with JavaScript) -->
+                    <!-- 這裡示範樣式，實際需要 JS 來控制顯示/隱藏 -->
+                    <div class="md:hidden mt-4 pt-4 border-t border-indigo-500">
+                        <ul class="space-y-2">
+                            <li><a href="#" class="block text-white hover:bg-indigo-700 px-4 py-2 rounded-lg transition">首頁</a></li>
+                            <li><a href="#" class="block text-white hover:bg-indigo-700 px-4 py-2 rounded-lg transition">關於我們</a></li>
+                            <li><a href="#" class="block text-white hover:bg-indigo-700 px-4 py-2 rounded-lg transition">服務項目</a></li>
+                            <li><a href="#" class="block text-white hover:bg-indigo-700 px-4 py-2 rounded-lg transition">聯絡我們</a></li>
+                            <li class="pt-2">
+                                <button class="w-full bg-white text-indigo-600 px-6 py-2 rounded-lg hover:bg-indigo-50 transition font-medium">
+                                    登入
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+
+            <!-- Code Explanation -->
+            <div class="bg-gray-800 text-gray-100 p-4 rounded-lg text-sm">
+                <pre class="overflow-x-auto"><code>&lt;!-- 桌面版選單：手機隱藏，平板以上顯示 --&gt;
+&lt;ul class="hidden md:flex items-center gap-6"&gt;
+  &lt;li&gt;&lt;a href="#"&gt;首頁&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!-- 手機版按鈕：手機顯示，平板以上隱藏 --&gt;
+&lt;button class="md:hidden"&gt;
+  &lt;!-- 漢堡圖示 --&gt;
+&lt;/button&gt;
+
+&lt;!-- 手機版選單：平板以上隱藏 --&gt;
+&lt;div class="md:hidden"&gt;
+  &lt;ul class="space-y-2"&gt;...&lt;/ul&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- Example 5: Navbar with Dropdown -->
+        <section class="space-y-4">
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">5. 下拉選單</h2>
+                <p class="text-gray-600 mb-4">學習重點：<code class="bg-gray-200 px-2 py-1 rounded">relative</code>、<code class="bg-gray-200 px-2 py-1 rounded">absolute</code>、<code class="bg-gray-200 px-2 py-1 rounded">group</code>、<code class="bg-gray-200 px-2 py-1 rounded">group-hover:</code></p>
+                <p class="text-sm text-amber-600 bg-amber-50 border border-amber-200 rounded-lg px-4 py-2">
+                    💡 提示：將滑鼠移到「產品」上方查看下拉選單！
+                </p>
+            </div>
+
+            <!-- Demo -->
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <nav class="bg-white border-b border-gray-200 px-6 py-4">
+                    <div class="flex items-center justify-between">
+                        <div class="text-2xl font-bold text-indigo-600">DropdownNav</div>
+
+                        <ul class="flex items-center gap-8">
+                            <li><a href="#" class="text-gray-700 hover:text-indigo-600 transition">首頁</a></li>
+
+                            <!-- Dropdown Menu Item -->
+                            <!-- group: 定義群組，讓子元素可以使用 group-hover -->
+                            <!-- relative: 設定相對定位，讓 absolute 子元素以此為基準 -->
+                            <li class="relative group">
+                                <a href="#" class="text-gray-700 hover:text-indigo-600 transition flex items-center gap-1">
+                                    產品
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </a>
+
+                                <!-- Dropdown Content -->
+                                <!-- absolute: 絕對定位 -->
+                                <!-- top-full: 定位在父元素底部 -->
+                                <!-- left-0: 靠左對齊 -->
+                                <!-- opacity-0: 預設透明 (隱藏) -->
+                                <!-- group-hover:opacity-100: 當父元素 hover 時顯示 -->
+                                <!-- pointer-events-none: 預設不接收滑鼠事件 -->
+                                <!-- group-hover:pointer-events-auto: hover 時可接收事件 -->
+                                <div class="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200
+                                            opacity-0 invisible group-hover:opacity-100 group-hover:visible
+                                            transition-all duration-200 pointer-events-none group-hover:pointer-events-auto">
+                                    <ul class="py-2">
+                                        <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition">產品 A</a></li>
+                                        <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition">產品 B</a></li>
+                                        <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition">產品 C</a></li>
+                                        <li class="border-t border-gray-200 mt-2 pt-2">
+                                            <a href="#" class="block px-4 py-2 text-indigo-600 font-medium hover:bg-indigo-50 transition">查看全部 →</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li><a href="#" class="text-gray-700 hover:text-indigo-600 transition">定價</a></li>
+                            <li><a href="#" class="text-gray-700 hover:text-indigo-600 transition">聯絡</a></li>
+                        </ul>
+
+                        <button class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                            開始使用
+                        </button>
+                    </div>
+                </nav>
+            </div>
+
+            <!-- Code Explanation -->
+            <div class="bg-gray-800 text-gray-100 p-4 rounded-lg text-sm">
+                <pre class="overflow-x-auto"><code>&lt;li class="relative group"&gt;
+  &lt;a href="#"&gt;產品 ▼&lt;/a&gt;
+
+  &lt;div class="absolute top-full left-0 mt-2
+              opacity-0 invisible
+              group-hover:opacity-100 group-hover:visible"&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href="#"&gt;產品 A&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/li&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- Example 6: Sticky Navigation -->
+        <section class="space-y-4">
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">6. 固定頂部導航</h2>
+                <p class="text-gray-600 mb-4">學習重點：<code class="bg-gray-200 px-2 py-1 rounded">sticky</code>、<code class="bg-gray-200 px-2 py-1 rounded">top-0</code>、<code class="bg-gray-200 px-2 py-1 rounded">z-*</code></p>
+                <p class="text-sm text-amber-600 bg-amber-50 border border-amber-200 rounded-lg px-4 py-2">
+                    💡 提示：向下捲動頁面時，導航列會固定在頂部！
+                </p>
+            </div>
+
+            <!-- Demo with content to scroll -->
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <!-- Sticky Navbar -->
+                <!-- sticky: 黏性定位 -->
+                <!-- top-0: 黏在頂部 -->
+                <!-- z-50: 設定層級，確保在其他元素之上 -->
+                <nav class="sticky top-0 z-50 bg-white border-b border-gray-200 px-6 py-4 shadow-md">
+                    <div class="flex items-center justify-between">
+                        <div class="text-2xl font-bold text-indigo-600">StickyNav</div>
+                        <ul class="flex items-center gap-6">
+                            <li><a href="#" class="text-gray-700 hover:text-indigo-600 transition">區段 1</a></li>
+                            <li><a href="#" class="text-gray-700 hover:text-indigo-600 transition">區段 2</a></li>
+                            <li><a href="#" class="text-gray-700 hover:text-indigo-600 transition">區段 3</a></li>
+                        </ul>
+                    </div>
+                </nav>
+
+                <!-- Scrollable Content -->
+                <div class="p-6 space-y-4">
+                    <div class="bg-indigo-50 p-8 rounded-lg">
+                        <h3 class="text-xl font-bold text-indigo-900 mb-2">區段 1</h3>
+                        <p class="text-indigo-700">向下捲動查看 sticky 效果...</p>
+                    </div>
+                    <div class="bg-purple-50 p-8 rounded-lg">
+                        <h3 class="text-xl font-bold text-purple-900 mb-2">區段 2</h3>
+                        <p class="text-purple-700">導航列會固定在頂部</p>
+                    </div>
+                    <div class="bg-pink-50 p-8 rounded-lg">
+                        <h3 class="text-xl font-bold text-pink-900 mb-2">區段 3</h3>
+                        <p class="text-pink-700">這對於單頁應用程式很有用！</p>
+                    </div>
+                    <div class="bg-blue-50 p-8 rounded-lg">
+                        <h3 class="text-xl font-bold text-blue-900 mb-2">區段 4</h3>
+                        <p class="text-blue-700">繼續捲動...</p>
+                    </div>
+                    <div class="bg-green-50 p-8 rounded-lg">
+                        <h3 class="text-xl font-bold text-green-900 mb-2">區段 5</h3>
+                        <p class="text-green-700">導航列始終可見！</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practice Exercises -->
+        <section class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl shadow-lg p-8 text-white">
+            <h2 class="text-3xl font-bold mb-4">🎯 練習任務</h2>
+            <div class="space-y-3">
+                <div class="flex items-start gap-3">
+                    <span class="text-2xl">1️⃣</span>
+                    <p>嘗試修改顏色主題：將所有 <code class="bg-white/20 px-2 py-1 rounded">indigo</code> 改成 <code class="bg-white/20 px-2 py-1 rounded">blue</code> 或其他顏色</p>
+                </div>
+                <div class="flex items-start gap-3">
+                    <span class="text-2xl">2️⃣</span>
+                    <p>新增更多導航連結，觀察 <code class="bg-white/20 px-2 py-1 rounded">space-x-*</code> 和 <code class="bg-white/20 px-2 py-1 rounded">gap-*</code> 的效果</p>
+                </div>
+                <div class="flex items-start gap-3">
+                    <span class="text-2xl">3️⃣</span>
+                    <p>在下拉選單中新增更多項目或建立第二層下拉選單</p>
+                </div>
+                <div class="flex items-start gap-3">
+                    <span class="text-2xl">4️⃣</span>
+                    <p>縮放瀏覽器視窗，觀察響應式導航的變化</p>
+                </div>
+                <div class="flex items-start gap-3">
+                    <span class="text-2xl">5️⃣</span>
+                    <p>嘗試組合不同範例的特性，建立你自己的導航列！</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Reference -->
+        <section class="bg-white rounded-xl shadow-lg p-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">📚 快速參考</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Flexbox -->
+                <div>
+                    <h3 class="font-bold text-indigo-600 mb-3">Flexbox 類別</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><code class="bg-gray-100 px-2 py-1 rounded">flex</code> - 建立彈性容器</li>
+                        <li><code class="bg-gray-100 px-2 py-1 rounded">items-center</code> - 垂直置中</li>
+                        <li><code class="bg-gray-100 px-2 py-1 rounded">justify-between</code> - 左右分散</li>
+                        <li><code class="bg-gray-100 px-2 py-1 rounded">justify-center</code> - 水平置中</li>
+                        <li><code class="bg-gray-100 px-2 py-1 rounded">gap-4</code> - 間距 1rem</li>
+                        <li><code class="bg-gray-100 px-2 py-1 rounded">space-x-6</code> - 水平間距 1.5rem</li>
+                    </ul>
+                </div>
+
+                <!-- States -->
+                <div>
+                    <h3 class="font-bold text-indigo-600 mb-3">互動狀態</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><code class="bg-gray-100 px-2 py-1 rounded">hover:text-indigo-600</code> - hover 改變文字色</li>
+                        <li><code class="bg-gray-100 px-2 py-1 rounded">hover:bg-gray-100</code> - hover 改變背景</li>
+                        <li><code class="bg-gray-100 px-2 py-1 rounded">focus:ring-2</code> - focus 顯示環形外框</li>
+                        <li><code class="bg-gray-100 px-2 py-1 rounded">transition</code> - 平滑過渡</li>
+                        <li><code class="bg-gray-100 px-2 py-1 rounded">group-hover:</code> - 群組 hover</li>
+                    </ul>
+                </div>
+
+                <!-- Responsive -->
+                <div>
+                    <h3 class="font-bold text-indigo-600 mb-3">響應式</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><code class="bg-gray-100 px-2 py-1 rounded">hidden</code> - 隱藏</li>
+                        <li><code class="bg-gray-100 px-2 py-1 rounded">md:flex</code> - 中型螢幕以上顯示</li>
+                        <li><code class="bg-gray-100 px-2 py-1 rounded">md:hidden</code> - 中型螢幕以上隱藏</li>
+                        <li><code class="bg-gray-100 px-2 py-1 rounded">lg:block</code> - 大型螢幕以上顯示</li>
+                    </ul>
+                </div>
+
+                <!-- Positioning -->
+                <div>
+                    <h3 class="font-bold text-indigo-600 mb-3">定位</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><code class="bg-gray-100 px-2 py-1 rounded">relative</code> - 相對定位</li>
+                        <li><code class="bg-gray-100 px-2 py-1 rounded">absolute</code> - 絕對定位</li>
+                        <li><code class="bg-gray-100 px-2 py-1 rounded">sticky</code> - 黏性定位</li>
+                        <li><code class="bg-gray-100 px-2 py-1 rounded">top-0</code> - 距離頂部 0</li>
+                        <li><code class="bg-gray-100 px-2 py-1 rounded">z-50</code> - 層級 50</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Back to Home -->
+        <div class="text-center">
+            <a href="index.html" class="inline-block bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transition font-medium shadow-lg">
+                ← 回到主頁面
+            </a>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM 互動教學 - Document Object Model</title>
+    <link href="./src/input.css" rel="stylesheet">
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen py-8">
+
+    <!-- 標題區 -->
+    <header class="max-w-6xl mx-auto px-4 mb-8">
+        <h1 class="text-4xl md:text-5xl font-bold text-indigo-900 mb-3">DOM 完整教學</h1>
+        <p class="text-lg text-gray-700">Document Object Model - 文檔物件模型</p>
+        <p class="text-sm text-gray-600 mt-2">透過互動範例學習如何用 JavaScript 操作網頁</p>
+    </header>
+
+    <!-- 主容器 -->
+    <main class="max-w-6xl mx-auto px-4 space-y-8">
+
+        <!-- Section 1: DOM 是什麼 -->
+        <section class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4 border-b-2 border-indigo-500 pb-2">
+                📚 DOM 是什麼？
+            </h2>
+            <div class="space-y-4 text-gray-700">
+                <p class="text-lg">
+                    <strong>DOM (Document Object Model)</strong> 是瀏覽器將 HTML 文件轉換成的
+                    <span class="text-indigo-600 font-semibold">樹狀結構物件</span>，
+                    讓 JavaScript 可以讀取和操作網頁內容。
+                </p>
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                    <p class="font-semibold text-blue-900 mb-2">簡單比喻：</p>
+                    <p>HTML 是「建築藍圖」，DOM 是「建築的實體模型」，JavaScript 是「可以修改模型的工具」。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: DOM 樹狀結構視覺化 -->
+        <section class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4 border-b-2 border-indigo-500 pb-2">
+                🌳 DOM 樹狀結構
+            </h2>
+
+            <!-- HTML 原始碼 -->
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">HTML 原始碼：</h3>
+                <pre class="bg-gray-900 text-green-400 p-4 rounded-lg overflow-x-auto text-sm"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;我的網頁&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;標題&lt;/h1&gt;
+    &lt;p&gt;段落文字&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+
+            <!-- DOM 樹狀圖 -->
+            <div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-3">轉換成 DOM 樹：</h3>
+                <div class="bg-gradient-to-r from-indigo-50 to-purple-50 p-6 rounded-lg border-2 border-indigo-200">
+                    <div class="font-mono text-sm space-y-2">
+                        <div class="flex items-center">
+                            <span class="bg-indigo-600 text-white px-3 py-1 rounded font-semibold">document</span>
+                            <span class="text-gray-500 ml-2">← 根節點</span>
+                        </div>
+                        <div class="ml-8 flex items-center">
+                            <span class="text-gray-400">└─</span>
+                            <span class="bg-purple-500 text-white px-3 py-1 rounded ml-2">html</span>
+                        </div>
+                        <div class="ml-16 flex items-center">
+                            <span class="text-gray-400">├─</span>
+                            <span class="bg-blue-500 text-white px-3 py-1 rounded ml-2">head</span>
+                        </div>
+                        <div class="ml-24 flex items-center">
+                            <span class="text-gray-400">│  └─</span>
+                            <span class="bg-teal-500 text-white px-3 py-1 rounded ml-2">title</span>
+                        </div>
+                        <div class="ml-32 flex items-center">
+                            <span class="text-gray-400">│     └─</span>
+                            <span class="bg-gray-400 text-white px-3 py-1 rounded ml-2">"我的網頁"</span>
+                            <span class="text-gray-500 ml-2 text-xs">← 文字節點</span>
+                        </div>
+                        <div class="ml-16 flex items-center">
+                            <span class="text-gray-400">└─</span>
+                            <span class="bg-blue-500 text-white px-3 py-1 rounded ml-2">body</span>
+                        </div>
+                        <div class="ml-24 flex items-center">
+                            <span class="text-gray-400">├─</span>
+                            <span class="bg-green-500 text-white px-3 py-1 rounded ml-2">h1</span>
+                        </div>
+                        <div class="ml-32 flex items-center">
+                            <span class="text-gray-400">│  └─</span>
+                            <span class="bg-gray-400 text-white px-3 py-1 rounded ml-2">"標題"</span>
+                        </div>
+                        <div class="ml-24 flex items-center">
+                            <span class="text-gray-400">└─</span>
+                            <span class="bg-green-500 text-white px-3 py-1 rounded ml-2">p</span>
+                        </div>
+                        <div class="ml-32 flex items-center">
+                            <span class="text-gray-400">└─</span>
+                            <span class="bg-gray-400 text-white px-3 py-1 rounded ml-2">"段落文字"</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: 互動式 DOM 操作範例 -->
+        <section class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 border-b-2 border-indigo-500 pb-2">
+                ⚡ 互動式 DOM 操作範例
+            </h2>
+
+            <!-- 範例 1: 選取元素 -->
+            <div class="mb-8 border-2 border-gray-200 rounded-lg p-5 hover:border-indigo-300 transition">
+                <h3 class="text-xl font-semibold text-indigo-700 mb-3">1️⃣ 選取元素 (querySelector)</h3>
+                <div class="bg-yellow-50 p-4 rounded mb-3">
+                    <p id="demo1-text" class="text-lg font-medium text-gray-800">我是一段可以被選取的文字</p>
+                </div>
+                <button id="demo1-btn"
+                        class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition font-semibold shadow-md">
+                    點我選取上方文字
+                </button>
+                <div class="mt-3 bg-gray-900 text-green-400 p-3 rounded text-sm font-mono">
+                    <code>const text = document.querySelector('#demo1-text');<br>console.log(text.textContent);</code>
+                </div>
+            </div>
+
+            <!-- 範例 2: 修改內容 -->
+            <div class="mb-8 border-2 border-gray-200 rounded-lg p-5 hover:border-indigo-300 transition">
+                <h3 class="text-xl font-semibold text-indigo-700 mb-3">2️⃣ 修改內容 (textContent)</h3>
+                <div class="bg-pink-50 p-4 rounded mb-3">
+                    <p id="demo2-text" class="text-lg font-medium text-gray-800">原始文字</p>
+                </div>
+                <button id="demo2-btn"
+                        class="bg-pink-600 text-white px-6 py-2 rounded-lg hover:bg-pink-700 transition font-semibold shadow-md">
+                    修改文字內容
+                </button>
+                <div class="mt-3 bg-gray-900 text-green-400 p-3 rounded text-sm font-mono">
+                    <code>text.textContent = '文字已被修改！';</code>
+                </div>
+            </div>
+
+            <!-- 範例 3: 修改樣式 -->
+            <div class="mb-8 border-2 border-gray-200 rounded-lg p-5 hover:border-indigo-300 transition">
+                <h3 class="text-xl font-semibold text-indigo-700 mb-3">3️⃣ 修改樣式 (style & classList)</h3>
+                <div class="bg-green-50 p-4 rounded mb-3">
+                    <p id="demo3-text" class="text-lg font-medium text-gray-800">這段文字的樣式會改變</p>
+                </div>
+                <div class="flex gap-3 flex-wrap">
+                    <button id="demo3-color"
+                            class="bg-red-600 text-white px-5 py-2 rounded-lg hover:bg-red-700 transition font-semibold shadow-md">
+                        改變顏色
+                    </button>
+                    <button id="demo3-size"
+                            class="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition font-semibold shadow-md">
+                        改變大小
+                    </button>
+                    <button id="demo3-reset"
+                            class="bg-gray-600 text-white px-5 py-2 rounded-lg hover:bg-gray-700 transition font-semibold shadow-md">
+                        重置
+                    </button>
+                </div>
+                <div class="mt-3 bg-gray-900 text-green-400 p-3 rounded text-sm font-mono">
+                    <code>text.style.color = 'red';<br>text.style.fontSize = '32px';</code>
+                </div>
+            </div>
+
+            <!-- 範例 4: 建立/刪除元素 -->
+            <div class="mb-8 border-2 border-gray-200 rounded-lg p-5 hover:border-indigo-300 transition">
+                <h3 class="text-xl font-semibold text-indigo-700 mb-3">4️⃣ 建立/刪除元素 (createElement, appendChild, remove)</h3>
+                <div id="demo4-container" class="bg-purple-50 p-4 rounded mb-3 min-h-[60px] space-y-2">
+                    <!-- 動態新增的元素會出現在這裡 -->
+                </div>
+                <div class="flex gap-3 flex-wrap">
+                    <button id="demo4-add"
+                            class="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 transition font-semibold shadow-md">
+                        新增元素
+                    </button>
+                    <button id="demo4-remove"
+                            class="bg-red-600 text-white px-5 py-2 rounded-lg hover:bg-red-700 transition font-semibold shadow-md">
+                        刪除最後一個
+                    </button>
+                </div>
+                <div class="mt-3 bg-gray-900 text-green-400 p-3 rounded text-sm font-mono">
+                    <code>const newP = document.createElement('p');<br>newP.textContent = '新段落';<br>container.appendChild(newP);</code>
+                </div>
+            </div>
+
+            <!-- 範例 5: 事件監聽 -->
+            <div class="mb-8 border-2 border-gray-200 rounded-lg p-5 hover:border-indigo-300 transition">
+                <h3 class="text-xl font-semibold text-indigo-700 mb-3">5️⃣ 事件監聽 (addEventListener)</h3>
+                <div class="bg-orange-50 p-4 rounded mb-3">
+                    <p id="demo5-text" class="text-lg font-medium text-gray-800">點擊次數：<span id="demo5-count" class="text-orange-600 font-bold">0</span></p>
+                </div>
+                <button id="demo5-btn"
+                        class="bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-700 transition font-semibold shadow-md">
+                    點我計數
+                </button>
+                <div class="mt-3 bg-gray-900 text-green-400 p-3 rounded text-sm font-mono">
+                    <!-- <code>btn.addEventListener('click', () => {<br>&nbsp;&nbsp;count++;<br>&nbsp;&nbsp;display.textContent = count;<br>});</code> -->
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Section 4: 實作練習區 -->
+        <section class="bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl shadow-lg p-6 md:p-8 text-white">
+            <h2 class="text-2xl font-bold mb-4 border-b-2 border-white pb-2">
+                🎯 實作練習區
+            </h2>
+            <div class="bg-white text-gray-800 rounded-lg p-5 space-y-4">
+                <h3 class="text-xl font-semibold text-purple-700">嘗試自己操作 DOM：</h3>
+
+                <div id="practice-area" class="bg-gray-50 border-2 border-dashed border-gray-300 p-6 rounded-lg min-h-[150px]">
+                    <p class="text-gray-600 text-center">這是練習區域</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <button id="practice-add-title"
+                            class="bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition font-semibold">
+                        新增標題
+                    </button>
+                    <button id="practice-add-paragraph"
+                            class="bg-green-600 text-white px-4 py-3 rounded-lg hover:bg-green-700 transition font-semibold">
+                        新增段落
+                    </button>
+                    <button id="practice-change-bg"
+                            class="bg-yellow-600 text-white px-4 py-3 rounded-lg hover:bg-yellow-700 transition font-semibold">
+                        改變背景色
+                    </button>
+                    <button id="practice-clear"
+                            class="bg-red-600 text-white px-4 py-3 rounded-lg hover:bg-red-700 transition font-semibold">
+                        清空練習區
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: DOM 常用方法總結 -->
+        <section class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 border-b-2 border-indigo-500 pb-2">
+                📖 DOM 常用方法總結
+            </h2>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-indigo-100">
+                            <th class="border border-indigo-300 px-4 py-3 font-semibold text-indigo-900">方法/屬性</th>
+                            <th class="border border-indigo-300 px-4 py-3 font-semibold text-indigo-900">功能</th>
+                            <th class="border border-indigo-300 px-4 py-3 font-semibold text-indigo-900">範例</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm">
+                        <tr class="hover:bg-gray-50">
+                            <td class="border border-gray-300 px-4 py-3 font-mono text-purple-600">querySelector()</td>
+                            <td class="border border-gray-300 px-4 py-3">選取第一個符合的元素</td>
+                            <td class="border border-gray-300 px-4 py-3 font-mono text-xs">document.querySelector('.class')</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="border border-gray-300 px-4 py-3 font-mono text-purple-600">querySelectorAll()</td>
+                            <td class="border border-gray-300 px-4 py-3">選取所有符合的元素</td>
+                            <td class="border border-gray-300 px-4 py-3 font-mono text-xs">document.querySelectorAll('p')</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="border border-gray-300 px-4 py-3 font-mono text-purple-600">getElementById()</td>
+                            <td class="border border-gray-300 px-4 py-3">根據 ID 選取元素</td>
+                            <td class="border border-gray-300 px-4 py-3 font-mono text-xs">document.getElementById('myId')</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="border border-gray-300 px-4 py-3 font-mono text-purple-600">textContent</td>
+                            <td class="border border-gray-300 px-4 py-3">讀取/設定文字內容</td>
+                            <td class="border border-gray-300 px-4 py-3 font-mono text-xs">element.textContent = '新文字'</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="border border-gray-300 px-4 py-3 font-mono text-purple-600">innerHTML</td>
+                            <td class="border border-gray-300 px-4 py-3">讀取/設定 HTML 內容</td>
+                            <td class="border border-gray-300 px-4 py-3 font-mono text-xs">element.innerHTML = '&lt;p&gt;HTML&lt;/p&gt;'</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="border border-gray-300 px-4 py-3 font-mono text-purple-600">style</td>
+                            <td class="border border-gray-300 px-4 py-3">修改行內樣式</td>
+                            <td class="border border-gray-300 px-4 py-3 font-mono text-xs">element.style.color = 'red'</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="border border-gray-300 px-4 py-3 font-mono text-purple-600">classList.add()</td>
+                            <td class="border border-gray-300 px-4 py-3">新增 CSS class</td>
+                            <td class="border border-gray-300 px-4 py-3 font-mono text-xs">element.classList.add('active')</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="border border-gray-300 px-4 py-3 font-mono text-purple-600">classList.remove()</td>
+                            <td class="border border-gray-300 px-4 py-3">移除 CSS class</td>
+                            <td class="border border-gray-300 px-4 py-3 font-mono text-xs">element.classList.remove('active')</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="border border-gray-300 px-4 py-3 font-mono text-purple-600">createElement()</td>
+                            <td class="border border-gray-300 px-4 py-3">建立新元素</td>
+                            <td class="border border-gray-300 px-4 py-3 font-mono text-xs">document.createElement('div')</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="border border-gray-300 px-4 py-3 font-mono text-purple-600">appendChild()</td>
+                            <td class="border border-gray-300 px-4 py-3">新增子元素</td>
+                            <td class="border border-gray-300 px-4 py-3 font-mono text-xs">parent.appendChild(child)</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="border border-gray-300 px-4 py-3 font-mono text-purple-600">remove()</td>
+                            <td class="border border-gray-300 px-4 py-3">刪除元素</td>
+                            <td class="border border-gray-300 px-4 py-3 font-mono text-xs">element.remove()</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="border border-gray-300 px-4 py-3 font-mono text-purple-600">addEventListener()</td>
+                            <td class="border border-gray-300 px-4 py-3">監聽事件</td>
+                            <td class="border border-gray-300 px-4 py-3 font-mono text-xs">element.addEventListener('click', fn)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-6xl mx-auto px-4 mt-12 pb-8 text-center text-gray-600">
+        <p class="text-sm">💡 提示：打開瀏覽器的開發者工具 (F12)，在 Console 中嘗試輸入 DOM 指令來實驗！</p>
+        <p class="text-xs mt-2">例如：<code class="bg-gray-200 px-2 py-1 rounded">document.querySelector('h1').style.color = 'red'</code></p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // ===== 範例 1: 選取元素 =====
+        const demo1Btn = document.querySelector('#demo1-btn');
+        demo1Btn.addEventListener('click', () => {
+            const text = document.querySelector('#demo1-text');
+            console.log('選取到的元素:', text);
+            console.log('元素的文字內容:', text.textContent);
+            alert('已在 Console 顯示選取結果！（按 F12 查看）');
+        });
+
+        // ===== 範例 2: 修改內容 =====
+        const demo2Btn = document.querySelector('#demo2-btn');
+        demo2Btn.addEventListener('click', () => {
+            const text = document.querySelector('#demo2-text');
+            text.textContent = '✅ 文字已被成功修改！時間：' + new Date().toLocaleTimeString();
+        });
+
+        // ===== 範例 3: 修改樣式 =====
+        const demo3Text = document.querySelector('#demo3-text');
+        const demo3Color = document.querySelector('#demo3-color');
+        const demo3Size = document.querySelector('#demo3-size');
+        const demo3Reset = document.querySelector('#demo3-reset');
+
+        demo3Color.addEventListener('click', () => {
+            demo3Text.style.color = 'red';
+            demo3Text.style.fontWeight = 'bold';
+        });
+
+        demo3Size.addEventListener('click', () => {
+            demo3Text.style.fontSize = '32px';
+        });
+
+        demo3Reset.addEventListener('click', () => {
+            demo3Text.style.color = '';
+            demo3Text.style.fontSize = '';
+            demo3Text.style.fontWeight = '';
+        });
+
+        // ===== 範例 4: 建立/刪除元素 =====
+        const demo4Container = document.querySelector('#demo4-container');
+        const demo4Add = document.querySelector('#demo4-add');
+        const demo4Remove = document.querySelector('#demo4-remove');
+        let elementCount = 0;
+
+        demo4Add.addEventListener('click', () => {
+            elementCount++;
+            const newP = document.createElement('p');
+            newP.textContent = `📦 元素 ${elementCount} - 建立時間：${new Date().toLocaleTimeString()}`;
+            newP.className = 'bg-white px-4 py-2 rounded shadow text-purple-700 font-medium';
+            demo4Container.appendChild(newP);
+        });
+
+        demo4Remove.addEventListener('click', () => {
+            const lastElement = demo4Container.lastElementChild;
+            if (lastElement) {
+                lastElement.remove();
+                elementCount--;
+            } else {
+                alert('沒有可以刪除的元素了！');
+            }
+        });
+
+        // ===== 範例 5: 事件監聽 =====
+        const demo5Btn = document.querySelector('#demo5-btn');
+        const demo5Count = document.querySelector('#demo5-count');
+        let count = 0;
+
+        demo5Btn.addEventListener('click', () => {
+            count++;
+            demo5Count.textContent = count;
+
+            // 當點擊次數達到特定數字時的驚喜
+            if (count === 10) {
+                alert('🎉 恭喜！你已經點擊了 10 次，你已經掌握事件監聽了！');
+            }
+        });
+
+        // ===== 實作練習區 =====
+        const practiceArea = document.querySelector('#practice-area');
+        const practiceAddTitle = document.querySelector('#practice-add-title');
+        const practiceAddParagraph = document.querySelector('#practice-add-paragraph');
+        const practiceChangeBg = document.querySelector('#practice-change-bg');
+        const practiceClear = document.querySelector('#practice-clear');
+
+        const bgColors = ['bg-red-100', 'bg-blue-100', 'bg-green-100', 'bg-yellow-100', 'bg-purple-100', 'bg-pink-100'];
+        let currentBgIndex = 0;
+
+        practiceAddTitle.addEventListener('click', () => {
+            const h2 = document.createElement('h2');
+            h2.textContent = '這是一個新標題';
+            h2.className = 'text-2xl font-bold text-blue-600 mb-2';
+            practiceArea.appendChild(h2);
+        });
+
+        practiceAddParagraph.addEventListener('click', () => {
+            const p = document.createElement('p');
+            p.textContent = '這是一段新的段落文字，建立於 ' + new Date().toLocaleTimeString();
+            p.className = 'text-gray-700 mb-2';
+            practiceArea.appendChild(p);
+        });
+
+        practiceChangeBg.addEventListener('click', () => {
+            // 移除舊的背景色
+            bgColors.forEach(color => practiceArea.classList.remove(color));
+            // 新增新的背景色
+            currentBgIndex = (currentBgIndex + 1) % bgColors.length;
+            practiceArea.classList.add(bgColors[currentBgIndex]);
+        });
+
+        practiceClear.addEventListener('click', () => {
+            if (confirm('確定要清空練習區域嗎？')) {
+                practiceArea.innerHTML = '<p class="text-gray-600 text-center">練習區已清空</p>';
+                // 移除所有背景色
+                bgColors.forEach(color => practiceArea.classList.remove(color));
+                currentBgIndex = 0;
+            }
+        });
+
+        // ===== 頁面載入完成提示 =====
+        console.log('🎓 DOM 教學頁面已載入完成！');
+        console.log('💡 提示：你可以在 Console 中直接輸入 DOM 指令來實驗');
+        console.log('例如：document.querySelector("h1").style.color = "red"');
+    </script>
+
+</body>
+
+</html>
