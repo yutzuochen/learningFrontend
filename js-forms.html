@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript 表單處理 | Forms</title>
+    <link rel="stylesheet" href="./src/output.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <header class="bg-gradient-to-r from-cyan-600 to-blue-600 text-white py-8 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-4xl font-bold mb-2">JavaScript 表單處理與驗證</h1>
+            <p class="text-cyan-100 text-lg">Form Handling & Validation</p>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Section 1: Form Basics -->
+        <section class="bg-white rounded-xl shadow-md p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-cyan-500 pb-2">
+                1. 表單基礎
+            </h2>
+            <div class="bg-cyan-50 border-l-4 border-cyan-500 p-6 mb-6">
+                <h3 class="font-semibold text-lg mb-3">取得表單值的方式</h3>
+                <div class="bg-gray-100 text-green-400 p-6 rounded-lg font-mono text-sm overflow-x-auto">
+                    <pre>// 1. 使用 value 屬性
+let input = document.querySelector('#username');
+let value = input.value;
+
+// 2. Checkbox 和 Radio
+let checkbox = document.querySelector('#agree');
+let isChecked = checkbox.checked; // true or false
+
+// 3. Select 下拉選單
+let select = document.querySelector('#country');
+let selected = select.value;
+
+// 4. 表單提交事件
+form.addEventListener('submit', function(event) {
+    event.preventDefault(); // 阻止表單提交重新載入頁面
+    // 處理表單資料...
+});</pre>
+                </div>
+            </div>
+
+            <div class="border-2 border-cyan-300 rounded-lg p-6 bg-cyan-50">
+                <h3 class="font-bold text-lg mb-4">🎯 試試看：基礎表單</h3>
+                <form id="basicForm" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">姓名：</label>
+                        <input type="text" id="basicName" class="w-full border-2 border-gray-300 rounded-lg px-4 py-2">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">興趣：</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" name="hobbies" value="閱讀" class="mr-2"> 閱讀
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="hobbies" value="運動" class="mr-2"> 運動
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="hobbies" value="音樂" class="mr-2"> 音樂
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="bg-cyan-600 text-white px-6 py-2 rounded-lg hover:bg-cyan-700 transition">
+                        提交
+                    </button>
+                </form>
+                <div id="basicResult" class="mt-4 p-4 bg-white rounded-lg hidden"></div>
+            </div>
+        </section>
+
+        <!-- Section 2: Form Validation -->
+        <section class="bg-white rounded-xl shadow-md p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-blue-500 pb-2">
+                2. 表單驗證
+            </h2>
+            <p class="text-gray-600 mb-6">驗證使用者輸入的資料是否符合要求。</p>
+
+            <div class="bg-gray-100 text-green-400 p-6 rounded-lg mb-6 font-mono text-sm overflow-x-auto">
+                <pre>// 常見驗證函式
+function validateEmail(email) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+}
+
+function validatePassword(password) {
+    // 至少 8 字元，包含大小寫和數字
+    return password.length &gt;= 8 &&
+           /[a-z]/.test(password) &&
+           /[A-Z]/.test(password) &&
+           /[0-9]/.test(password);
+}
+
+function validatePhone(phone) {
+    // 台灣手機格式 09xx-xxxxxx
+    const regex = /^09\d{2}-?\d{6}$/;
+    return regex.test(phone);
+}</pre>
+            </div>
+
+            <div class="border-2 border-blue-300 rounded-lg p-6 bg-blue-50">
+                <h3 class="font-bold text-lg mb-4">🎯 完整註冊表單範例</h3>
+                <form id="registerForm" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Email <span class="text-red-500">*</span></label>
+                        <input type="email" id="email" required class="w-full border-2 border-gray-300 rounded-lg px-4 py-2">
+                        <p class="text-sm text-red-600 mt-1 hidden" id="emailError"></p>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">密碼 <span class="text-red-500">*</span></label>
+                        <input type="password" id="password" required class="w-full border-2 border-gray-300 rounded-lg px-4 py-2">
+                        <p class="text-sm text-gray-600 mt-1">至少 8 字元，需包含大小寫字母和數字</p>
+                        <p class="text-sm text-red-600 mt-1 hidden" id="passwordError"></p>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">確認密碼 <span class="text-red-500">*</span></label>
+                        <input type="password" id="confirmPassword" required class="w-full border-2 border-gray-300 rounded-lg px-4 py-2">
+                        <p class="text-sm text-red-600 mt-1 hidden" id="confirmError"></p>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">手機號碼</label>
+                        <input type="tel" id="phone" placeholder="0912-345678" class="w-full border-2 border-gray-300 rounded-lg px-4 py-2">
+                        <p class="text-sm text-red-600 mt-1 hidden" id="phoneError"></p>
+                    </div>
+
+                    <div>
+                        <label class="flex items-center">
+                            <input type="checkbox" id="terms" required class="mr-2">
+                            我同意服務條款 <span class="text-red-500 ml-1">*</span>
+                        </label>
+                        <p class="text-sm text-red-600 mt-1 hidden" id="termsError"></p>
+                    </div>
+
+                    <button type="submit" class="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition font-semibold">
+                        註冊
+                    </button>
+                </form>
+                <div id="registerResult" class="mt-4 p-4 rounded-lg hidden"></div>
+            </div>
+        </section>
+
+        <!-- Section 3: Real-time Validation -->
+        <section class="bg-white rounded-xl shadow-md p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-green-500 pb-2">
+                3. 即時驗證與回饋
+            </h2>
+            <p class="text-gray-600 mb-6">在使用者輸入時即時提供回饋，提升使用者體驗。</p>
+
+            <div class="border-2 border-green-300 rounded-lg p-6 bg-green-50">
+                <h3 class="font-bold text-lg mb-4">🎯 即時驗證示範</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">使用者名稱（3-20字元）</label>
+                        <input type="text" id="realtimeUsername" class="w-full border-2 border-gray-300 rounded-lg px-4 py-2" placeholder="輸入使用者名稱...">
+                        <div id="usernameStatus" class="mt-2 text-sm"></div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">密碼強度檢測</label>
+                        <input type="password" id="realtimePassword" class="w-full border-2 border-gray-300 rounded-lg px-4 py-2" placeholder="輸入密碼...">
+                        <div class="mt-2">
+                            <div class="flex gap-1 mb-2">
+                                <div id="strength1" class="flex-1 h-2 bg-gray-200 rounded"></div>
+                                <div id="strength2" class="flex-1 h-2 bg-gray-200 rounded"></div>
+                                <div id="strength3" class="flex-1 h-2 bg-gray-200 rounded"></div>
+                                <div id="strength4" class="flex-1 h-2 bg-gray-200 rounded"></div>
+                            </div>
+                            <p id="strengthText" class="text-sm text-gray-600"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Dynamic Forms -->
+        <section class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl shadow-md p-8 mb-8 border-2 border-purple-300">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">
+                🎯 實作：動態表單建立器
+            </h2>
+            <p class="text-gray-600 mb-6">動態新增和刪除表單欄位。</p>
+
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="font-bold text-lg mb-4">聯絡人列表</h3>
+                <div id="contactsList" class="space-y-4 mb-4"></div>
+                <button id="btnAddContact" class="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition">
+                    ➕ 新增聯絡人
+                </button>
+                <button id="btnShowContacts" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition ml-2">
+                    顯示所有資料
+                </button>
+                <div id="contactsOutput" class="mt-4 p-4 bg-gray-50 rounded-lg hidden"></div>
+            </div>
+        </section>
+
+        <!-- Quick Reference -->
+        <section class="bg-gradient-to-r from-gray-800 to-gray-900 text-white rounded-xl shadow-md p-8">
+            <h2 class="text-3xl font-bold mb-6">📚 Quick Reference</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-xl font-bold mb-3 text-cyan-300">取得表單值</h3>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">input.value</code> - 文字輸入</li>
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">checkbox.checked</code> - 核取方塊</li>
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">select.value</code> - 下拉選單</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-3 text-cyan-300">驗證要點</h3>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li>使用 RegEx 驗證格式</li>
+                        <li>即時回饋提升體驗</li>
+                        <li>清楚的錯誤訊息</li>
+                        <li>阻止無效提交</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Section 1: Basic Form
+        document.getElementById('basicForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('basicName').value;
+            const hobbies = Array.from(document.querySelectorAll('input[name="hobbies"]:checked'))
+                .map(cb => cb.value);
+
+            const result = document.getElementById('basicResult');
+            result.classList.remove('hidden');
+            result.innerHTML = `
+                <strong>提交的資料：</strong><br>
+                姓名: ${name || '(未填寫)'}<br>
+                興趣: ${hobbies.length > 0 ? hobbies.join(', ') : '(未選擇)'}
+            `;
+            console.log('表單資料:', { name, hobbies });
+        });
+
+        // Section 2: Registration Form with Validation
+        function validateEmail(email) {
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return regex.test(email);
+        }
+
+        function validatePassword(password) {
+            return password.length >= 8 &&
+                   /[a-z]/.test(password) &&
+                   /[A-Z]/.test(password) &&
+                   /[0-9]/.test(password);
+        }
+
+        function validatePhone(phone) {
+            if (!phone) return true; // Optional field
+            const regex = /^09\d{2}-?\d{6}$/;
+            return regex.test(phone);
+        }
+
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Clear previous errors
+            document.querySelectorAll('[id$="Error"]').forEach(el => {
+                el.classList.add('hidden');
+                el.textContent = '';
+            });
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const phone = document.getElementById('phone').value;
+            const terms = document.getElementById('terms').checked;
+
+            let isValid = true;
+
+            // Validate email
+            if (!validateEmail(email)) {
+                document.getElementById('emailError').textContent = '請輸入有效的 Email 格式';
+                document.getElementById('emailError').classList.remove('hidden');
+                isValid = false;
+            }
+
+            // Validate password
+            if (!validatePassword(password)) {
+                document.getElementById('passwordError').textContent = '密碼必須至少 8 字元，包含大小寫字母和數字';
+                document.getElementById('passwordError').classList.remove('hidden');
+                isValid = false;
+            }
+
+            // Validate confirm password
+            if (password !== confirmPassword) {
+                document.getElementById('confirmError').textContent = '密碼不一致';
+                document.getElementById('confirmError').classList.remove('hidden');
+                isValid = false;
+            }
+
+            // Validate phone
+            if (!validatePhone(phone)) {
+                document.getElementById('phoneError').textContent = '請輸入有效的手機號碼格式（如：0912-345678）';
+                document.getElementById('phoneError').classList.remove('hidden');
+                isValid = false;
+            }
+
+            // Validate terms
+            if (!terms) {
+                document.getElementById('termsError').textContent = '請同意服務條款';
+                document.getElementById('termsError').classList.remove('hidden');
+                isValid = false;
+            }
+
+            const result = document.getElementById('registerResult');
+            result.classList.remove('hidden');
+
+            if (isValid) {
+                result.className = 'mt-4 p-4 rounded-lg bg-green-100 border-2 border-green-500';
+                result.innerHTML = `
+                    <strong class="text-green-800">✓ 註冊成功！</strong><br>
+                    <span class="text-green-700">Email: ${email}</span>
+                `;
+                console.log('註冊成功:', { email, phone });
+            } else {
+                result.className = 'mt-4 p-4 rounded-lg bg-red-100 border-2 border-red-500';
+                result.innerHTML = '<strong class="text-red-800">✗ 請修正表單錯誤</strong>';
+            }
+        });
+
+        // Section 3: Real-time Validation
+        document.getElementById('realtimeUsername').addEventListener('input', function(e) {
+            const username = e.target.value;
+            const status = document.getElementById('usernameStatus');
+
+            if (username.length === 0) {
+                status.textContent = '';
+                status.className = 'mt-2 text-sm';
+            } else if (username.length < 3) {
+                status.textContent = '❌ 太短（至少 3 字元）';
+                status.className = 'mt-2 text-sm text-red-600';
+            } else if (username.length > 20) {
+                status.textContent = '❌ 太長（最多 20 字元）';
+                status.className = 'mt-2 text-sm text-red-600';
+            } else {
+                status.textContent = '✓ 可用！';
+                status.className = 'mt-2 text-sm text-green-600 font-semibold';
+            }
+        });
+
+        // Password Strength
+        document.getElementById('realtimePassword').addEventListener('input', function(e) {
+            const password = e.target.value;
+            let strength = 0;
+
+            if (password.length >= 8) strength++;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^a-zA-Z0-9]/.test(password)) strength++;
+
+            const indicators = ['strength1', 'strength2', 'strength3', 'strength4'];
+            const colors = ['bg-red-500', 'bg-orange-500', 'bg-yellow-500', 'bg-green-500'];
+            const texts = ['很弱', '弱', '中等', '強'];
+
+            indicators.forEach((id, index) => {
+                const el = document.getElementById(id);
+                if (index < strength) {
+                    el.className = `flex-1 h-2 ${colors[strength - 1]} rounded`;
+                } else {
+                    el.className = 'flex-1 h-2 bg-gray-200 rounded';
+                }
+            });
+
+            const strengthText = document.getElementById('strengthText');
+            if (password.length === 0) {
+                strengthText.textContent = '';
+            } else {
+                strengthText.textContent = `密碼強度：${texts[strength - 1] || '很弱'}`;
+                strengthText.className = `text-sm ${strength >= 3 ? 'text-green-600' : 'text-orange-600'}`;
+            }
+        });
+
+        // Section 4: Dynamic Contacts
+        let contactCount = 0;
+
+        document.getElementById('btnAddContact').addEventListener('click', function() {
+            contactCount++;
+            const contactsList = document.getElementById('contactsList');
+
+            const contactDiv = document.createElement('div');
+            contactDiv.className = 'border-2 border-purple-200 rounded-lg p-4 bg-white';
+            contactDiv.innerHTML = `
+                <div class="flex items-center justify-between mb-3">
+                    <h4 class="font-semibold">聯絡人 #${contactCount}</h4>
+                    <button onclick="this.parentElement.parentElement.remove()" class="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600">
+                        刪除
+                    </button>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <input type="text" placeholder="姓名" class="contact-name border-2 border-gray-300 rounded-lg px-3 py-2">
+                    <input type="email" placeholder="Email" class="contact-email border-2 border-gray-300 rounded-lg px-3 py-2">
+                    <input type="tel" placeholder="電話" class="contact-phone border-2 border-gray-300 rounded-lg px-3 py-2">
+                    <input type="text" placeholder="公司" class="contact-company border-2 border-gray-300 rounded-lg px-3 py-2">
+                </div>
+            `;
+
+            contactsList.appendChild(contactDiv);
+        });
+
+        document.getElementById('btnShowContacts').addEventListener('click', function() {
+            const contacts = Array.from(document.querySelectorAll('#contactsList > div')).map((div, index) => {
+                return {
+                    name: div.querySelector('.contact-name').value || '(未填)',
+                    email: div.querySelector('.contact-email').value || '(未填)',
+                    phone: div.querySelector('.contact-phone').value || '(未填)',
+                    company: div.querySelector('.contact-company').value || '(未填)'
+                };
+            });
+
+            const output = document.getElementById('contactsOutput');
+            output.classList.remove('hidden');
+
+            if (contacts.length === 0) {
+                output.innerHTML = '<p class="text-gray-600">尚無聯絡人資料</p>';
+            } else {
+                output.innerHTML = `
+                    <strong class="block mb-2">共 ${contacts.length} 位聯絡人：</strong>
+                    <pre class="text-xs overflow-x-auto">${JSON.stringify(contacts, null, 2)}</pre>
+                `;
+            }
+
+            console.log('聯絡人資料:', contacts);
+        });
+
+        // Welcome
+        console.log('%c🎉 歡迎來到表單處理教學！', 'color: #06b6d4; font-size: 20px; font-weight: bold;');
+    </script>
+</body>
+</html>

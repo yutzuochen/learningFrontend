@@ -2,12 +2,17 @@
   "name": "tailwind-learning-project",
   "version": "1.0.0",
   "description": "A simple Tailwind CSS learning example",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
-  "keywords": ["tailwind", "css", "tutorial"],
+  "keywords": [
+    "tailwind",
+    "css",
+    "tutorial"
+  ],
   "author": "",
   "license": "MIT",
   "devDependencies": {
@@ -15,5 +20,10 @@
     "postcss": "^8.4.32",
     "tailwindcss": "^3.4.1",
     "vite": "^5.0.0"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^5.1.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   }
 }

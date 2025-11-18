@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript 非同步程式設計 | Async Programming</title>
+    <link rel="stylesheet" href="./src/output.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <header class="bg-gradient-to-r from-rose-600 to-red-600 text-white py-8 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-4xl font-bold mb-2">JavaScript 非同步程式設計</h1>
+            <p class="text-rose-100 text-lg">Async/Await & Fetch API</p>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Section 1: What is Async -->
+        <section class="bg-white rounded-xl shadow-md p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-rose-500 pb-2">
+                1. 什麼是非同步？
+            </h2>
+            <div class="bg-rose-50 border-l-4 border-rose-500 p-6 mb-6">
+                <h3 class="font-semibold text-lg mb-3">同步 vs 非同步</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-bold text-rose-700 mb-2">同步 Synchronous</h4>
+                        <p class="text-gray-700 text-sm mb-2">程式碼按順序執行，一行接著一行，必須等前一行完成。</p>
+                        <div class="bg-white p-3 rounded text-sm">
+                            <code>console.log('1');<br>console.log('2');<br>console.log('3');</code>
+                            <p class="mt-2 text-gray-600">輸出: 1, 2, 3</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-rose-700 mb-2">非同步 Asynchronous</h4>
+                        <p class="text-gray-700 text-sm mb-2">某些操作可以在背景執行，不會阻塞後續程式碼。</p>
+                        <div class="bg-white p-3 rounded text-sm">
+                            <code>console.log('1');<br>setTimeout(() => console.log('2'), 1000);<br>console.log('3');</code>
+                            <p class="mt-2 text-gray-600">輸出: 1, 3, 2</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-6">
+                <p class="text-gray-700">
+                    <strong>💡 為什麼需要非同步？</strong><br>
+                    - API 請求可能需要數秒<br>
+                    - 讀取大檔案需要時間<br>
+                    - 不希望頁面因為等待而卡住
+                </p>
+            </div>
+
+            <div class="border-2 border-rose-300 rounded-lg p-6 bg-rose-50">
+                <h3 class="font-bold text-lg mb-4">🎯 試試看：setTimeout 基礎</h3>
+                <button id="btnTimeout" class="bg-rose-600 text-white px-6 py-3 rounded-lg hover:bg-rose-700 transition">
+                    執行延遲範例
+                </button>
+                <div id="timeoutOutput" class="mt-4 space-y-2"></div>
+            </div>
+        </section>
+
+        <!-- Section 2: Promises -->
+        <section class="bg-white rounded-xl shadow-md p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-orange-500 pb-2">
+                2. Promises 承諾
+            </h2>
+            <p class="text-gray-600 mb-6">Promise 是處理非同步操作的物件，代表一個最終會完成或失敗的操作。</p>
+
+            <div class="bg-gray-100 text-green-400 p-6 rounded-lg mb-6 font-mono text-sm overflow-x-auto">
+                <pre>// Promise 有三種狀態
+// 1. pending (等待中)
+// 2. fulfilled (成功)
+// 3. rejected (失敗)
+
+// 建立 Promise
+let promise = new Promise((resolve, reject) => {
+    let success = true;
+
+    setTimeout(() => {
+        if (success) {
+            resolve('成功！'); // 完成
+        } else {
+            reject('失敗！');  // 失敗
+        }
+    }, 1000);
+});
+
+// 使用 Promise
+promise
+    .then(result => {
+        console.log('成功:', result);
+    })
+    .catch(error => {
+        console.log('錯誤:', error);
+    })
+    .finally(() => {
+        console.log('完成（無論成功或失敗）');
+    });</pre>
+            </div>
+
+            <div class="border-2 border-orange-300 rounded-lg p-6 bg-orange-50">
+                <h3 class="font-bold text-lg mb-4">🎯 Promise 示範</h3>
+                <div class="flex gap-3 mb-4">
+                    <button id="btnPromiseSuccess" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">
+                        模擬成功
+                    </button>
+                    <button id="btnPromiseFail" class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition">
+                        模擬失敗
+                    </button>
+                </div>
+                <div id="promiseOutput" class="p-4 bg-white rounded-lg font-mono text-sm"></div>
+            </div>
+        </section>
+
+        <!-- Section 3: Async/Await -->
+        <section class="bg-white rounded-xl shadow-md p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-purple-500 pb-2">
+                3. Async/Await
+            </h2>
+            <p class="text-gray-600 mb-6">async/await 是更現代、更易讀的處理非同步的方式（基於 Promise）。</p>
+
+            <div class="bg-gray-100 text-green-400 p-6 rounded-lg mb-6 font-mono text-sm overflow-x-auto">
+                <pre>// 傳統 Promise 寫法
+function getData() {
+    return fetch('https://api.example.com/data')
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            return data;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+
+// async/await 寫法（更簡潔！）
+async function getData() {
+    try {
+        const response = await fetch('https://api.example.com/data');
+        const data = await response.json();
+        console.log(data);
+        return data;
+    } catch (error) {
+        console.error('錯誤:', error);
+    }
+}</pre>
+            </div>
+
+            <div class="bg-purple-50 border-l-4 border-purple-500 p-4 mb-6">
+                <h3 class="font-semibold mb-2">重要規則：</h3>
+                <ul class="list-disc list-inside space-y-1 text-gray-700 text-sm">
+                    <li><code class="bg-gray-100 px-2 py-1 rounded">await</code> 只能在 <code class="bg-gray-100 px-2 py-1 rounded">async</code> 函式中使用</li>
+                    <li><code class="bg-gray-100 px-2 py-1 rounded">await</code> 會暫停函式執行，等待 Promise 完成</li>
+                    <li>使用 <code class="bg-gray-100 px-2 py-1 rounded">try/catch</code> 處理錯誤</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 4: Fetch API -->
+        <section class="bg-white rounded-xl shadow-md p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-blue-500 pb-2">
+                4. Fetch API - 發送 HTTP 請求
+            </h2>
+            <p class="text-gray-600 mb-6">Fetch API 用來發送網路請求，取得外部資料。</p>
+
+            <div class="bg-gray-100 text-green-400 p-6 rounded-lg mb-6 font-mono text-sm overflow-x-auto">
+                <pre>// GET 請求
+async function fetchData() {
+    const response = await fetch('https://api.example.com/users');
+    const data = await response.json();
+    return data;
+}
+
+// POST 請求
+async function createUser(userData) {
+    const response = await fetch('https://api.example.com/users', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData)
+    });
+    const data = await response.json();
+    return data;
+}</pre>
+            </div>
+
+            <div class="border-2 border-blue-300 rounded-lg p-6 bg-blue-50">
+                <h3 class="font-bold text-lg mb-4">🎯 實戰：Random User API</h3>
+                <p class="text-gray-600 mb-4">從 randomuser.me 取得隨機使用者資料</p>
+                <button id="btnFetchUser" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+                    🔄 載入隨機使用者
+                </button>
+                <div id="userCard" class="mt-4 hidden"></div>
+                <div id="loading" class="mt-4 text-center text-gray-600 hidden">
+                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                    <p class="mt-2">載入中...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Practical Example -->
+        <section class="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl shadow-md p-8 mb-8 border-2 border-emerald-300">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">
+                🎯 綜合實作：天氣查詢系統
+            </h2>
+            <p class="text-gray-600 mb-6">結合 Fetch API 與非同步處理，建立實用的天氣查詢工具。</p>
+
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <div class="flex gap-4 mb-6 flex-wrap">
+                    <input type="text" id="cityInput" placeholder="輸入城市名稱 (英文)" class="flex-1 min-w-[200px] border-2 border-gray-300 rounded-lg px-4 py-2">
+                    <button id="btnSearchWeather" class="bg-emerald-600 text-white px-6 py-2 rounded-lg hover:bg-emerald-700 transition">
+                        🔍 查詢天氣
+                    </button>
+                </div>
+                <div id="weatherLoading" class="text-center text-gray-600 hidden">
+                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600"></div>
+                    <p class="mt-2">查詢中...</p>
+                </div>
+                <div id="weatherResult" class="hidden"></div>
+                <div class="mt-4 text-sm text-gray-500">
+                    💡 提示：這是示範用的模擬天氣資料。實際應用需要申請 API Key（如 OpenWeatherMap）。
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Multiple Requests -->
+        <section class="bg-white rounded-xl shadow-md p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-indigo-500 pb-2">
+                5. 多個非同步請求
+            </h2>
+            <p class="text-gray-600 mb-6">如何同時發送多個請求並等待全部完成。</p>
+
+            <div class="bg-gray-100 text-green-400 p-6 rounded-lg mb-6 font-mono text-sm overflow-x-auto">
+                <pre>// Promise.all - 等待所有 Promise 完成
+async function fetchMultiple() {
+    try {
+        const [users, posts, comments] = await Promise.all([
+            fetch('/api/users').then(r => r.json()),
+            fetch('/api/posts').then(r => r.json()),
+            fetch('/api/comments').then(r => r.json())
+        ]);
+
+        console.log('全部完成！', { users, posts, comments });
+    } catch (error) {
+        console.error('其中一個失敗:', error);
+    }
+}
+
+// Promise.race - 回傳最快完成的
+async function raceExample() {
+    const fastest = await Promise.race([
+        fetch('/api/server1'),
+        fetch('/api/server2'),
+        fetch('/api/server3')
+    ]);
+    console.log('最快的伺服器:', fastest);
+}</pre>
+            </div>
+
+            <div class="border-2 border-indigo-300 rounded-lg p-6 bg-indigo-50">
+                <h3 class="font-bold text-lg mb-4">🎯 示範：同時載入多個使用者</h3>
+                <button id="btnFetchMultiple" class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition">
+                    載入 3 位使用者（並行）
+                </button>
+                <div id="multipleLoading" class="mt-4 text-center text-gray-600 hidden">
+                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+                    <p class="mt-2">同時載入中...</p>
+                </div>
+                <div id="multipleUsers" class="mt-4 grid md:grid-cols-3 gap-4"></div>
+            </div>
+        </section>
+
+        <!-- Quick Reference -->
+        <section class="bg-gradient-to-r from-gray-800 to-gray-900 text-white rounded-xl shadow-md p-8">
+            <h2 class="text-3xl font-bold mb-6">📚 Quick Reference</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-xl font-bold mb-3 text-rose-300">Async 語法</h3>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">async function</code> - 宣告非同步函式</li>
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">await</code> - 等待 Promise</li>
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">try/catch</code> - 錯誤處理</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-3 text-rose-300">Fetch API</h3>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">fetch(url)</code> - 發送請求</li>
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">.json()</code> - 解析 JSON</li>
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">method, headers, body</code> - 請求選項</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-3 text-rose-300">Promise 工具</h3>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">Promise.all()</code> - 等待全部</li>
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">Promise.race()</code> - 最快的一個</li>
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">.then().catch()</code> - 鏈式呼叫</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-3 text-rose-300">最佳實踐</h3>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li>優先使用 async/await</li>
+                        <li>總是使用 try/catch</li>
+                        <li>顯示載入狀態</li>
+                        <li>處理錯誤情況</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Section 1: setTimeout Demo
+        document.getElementById('btnTimeout').addEventListener('click', function() {
+            const output = document.getElementById('timeoutOutput');
+            output.innerHTML = '';
+
+            const addMessage = (msg, color = 'gray') => {
+                const p = document.createElement('p');
+                p.className = `text-${color}-700 font-mono text-sm`;
+                p.textContent = msg;
+                output.appendChild(p);
+            };
+
+            addMessage('開始執行...', 'blue');
+
+            setTimeout(() => {
+                addMessage('1 秒後執行這個！', 'green');
+            }, 1000);
+
+            setTimeout(() => {
+                addMessage('2 秒後執行這個！', 'purple');
+            }, 2000);
+
+            addMessage('這行會立即執行（不等待）', 'orange');
+        });
+
+        // Section 2: Promise Demo
+        function simulateAsync(success, delay = 1000) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    if (success) {
+                        resolve('✓ 操作成功！');
+                    } else {
+                        reject('✗ 操作失敗！');
+                    }
+                }, delay);
+            });
+        }
+
+        document.getElementById('btnPromiseSuccess').addEventListener('click', async function() {
+            const output = document.getElementById('promiseOutput');
+            output.innerHTML = '<span class="text-gray-600">處理中...</span>';
+
+            try {
+                const result = await simulateAsync(true);
+                output.innerHTML = `<span class="text-green-600 font-semibold">${result}</span>`;
+            } catch (error) {
+                output.innerHTML = `<span class="text-red-600 font-semibold">${error}</span>`;
+            }
+        });
+
+        document.getElementById('btnPromiseFail').addEventListener('click', async function() {
+            const output = document.getElementById('promiseOutput');
+            output.innerHTML = '<span class="text-gray-600">處理中...</span>';
+
+            try {
+                const result = await simulateAsync(false);
+                output.innerHTML = `<span class="text-green-600 font-semibold">${result}</span>`;
+            } catch (error) {
+                output.innerHTML = `<span class="text-red-600 font-semibold">${error}</span>`;
+            }
+        });
+
+        // Section 4: Fetch Random User
+        document.getElementById('btnFetchUser').addEventListener('click', async function() {
+            const userCard = document.getElementById('userCard');
+            const loading = document.getElementById('loading');
+
+            userCard.classList.add('hidden');
+            loading.classList.remove('hidden');
+
+            try {
+                const response = await fetch('https://randomuser.me/api/');
+                const data = await response.json();
+                const user = data.results[0];
+
+                loading.classList.add('hidden');
+                userCard.classList.remove('hidden');
+                userCard.innerHTML = `
+                    <div class="bg-white p-6 rounded-lg shadow-md border-2 border-blue-200">
+                        <div class="flex items-center gap-4">
+                            <img src="${user.picture.large}" alt="${user.name.first}" class="w-20 h-20 rounded-full border-4 border-blue-300">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800">${user.name.first} ${user.name.last}</h3>
+                                <p class="text-gray-600">📧 ${user.email}</p>
+                                <p class="text-gray-600">📱 ${user.phone}</p>
+                                <p class="text-gray-600">📍 ${user.location.city}, ${user.location.country}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                console.log('使用者資料:', user);
+            } catch (error) {
+                loading.classList.add('hidden');
+                userCard.classList.remove('hidden');
+                userCard.innerHTML = `<div class="bg-red-100 text-red-700 p-4 rounded-lg">❌ 載入失敗: ${error.message}</div>`;
+            }
+        });
+
+        // Section 5: Weather (Simulated)
+        document.getElementById('btnSearchWeather').addEventListener('click', async function() {
+            const city = document.getElementById('cityInput').value.trim();
+            const loading = document.getElementById('weatherLoading');
+            const result = document.getElementById('weatherResult');
+
+            if (!city) {
+                alert('請輸入城市名稱');
+                return;
+            }
+
+            result.classList.add('hidden');
+            loading.classList.remove('hidden');
+
+            // 模擬 API 延遲
+            await new Promise(resolve => setTimeout(resolve, 1500));
+
+            // 模擬天氣資料
+            const mockWeather = {
+                city: city,
+                temp: Math.floor(Math.random() * 20) + 15,
+                condition: ['晴天', '多雲', '陰天', '小雨'][Math.floor(Math.random() * 4)],
+                humidity: Math.floor(Math.random() * 40) + 50,
+                wind: Math.floor(Math.random() * 15) + 5
+            };
+
+            loading.classList.add('hidden');
+            result.classList.remove('hidden');
+            result.innerHTML = `
+                <div class="bg-gradient-to-br from-blue-400 to-blue-600 text-white p-8 rounded-lg shadow-lg">
+                    <h3 class="text-3xl font-bold mb-4">${mockWeather.city}</h3>
+                    <div class="text-6xl font-bold mb-4">${mockWeather.temp}°C</div>
+                    <p class="text-xl mb-4">${mockWeather.condition}</p>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>💧 濕度: ${mockWeather.humidity}%</div>
+                        <div>💨 風速: ${mockWeather.wind} km/h</div>
+                    </div>
+                </div>
+            `;
+
+            console.log('天氣資料:', mockWeather);
+        });
+
+        // Section 6: Multiple Requests
+        document.getElementById('btnFetchMultiple').addEventListener('click', async function() {
+            const container = document.getElementById('multipleUsers');
+            const loading = document.getElementById('multipleLoading');
+
+            container.innerHTML = '';
+            loading.classList.remove('hidden');
+
+            try {
+                // 並行發送 3 個請求
+                const [data1, data2, data3] = await Promise.all([
+                    fetch('https://randomuser.me/api/').then(r => r.json()),
+                    fetch('https://randomuser.me/api/').then(r => r.json()),
+                    fetch('https://randomuser.me/api/').then(r => r.json())
+                ]);
+
+                const users = [data1.results[0], data2.results[0], data3.results[0]];
+
+                loading.classList.add('hidden');
+
+                users.forEach(user => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-white p-4 rounded-lg shadow-md border-2 border-indigo-200';
+                    card.innerHTML = `
+                        <img src="${user.picture.medium}" alt="${user.name.first}" class="w-16 h-16 rounded-full mx-auto mb-3 border-2 border-indigo-300">
+                        <h4 class="font-bold text-center">${user.name.first} ${user.name.last}</h4>
+                        <p class="text-sm text-gray-600 text-center">${user.email}</p>
+                    `;
+                    container.appendChild(card);
+                });
+
+                console.log('載入 3 位使用者:', users);
+            } catch (error) {
+                loading.classList.add('hidden');
+                container.innerHTML = `<div class="col-span-3 bg-red-100 text-red-700 p-4 rounded-lg">❌ 載入失敗</div>`;
+            }
+        });
+
+        // Support Enter key
+        document.getElementById('cityInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('btnSearchWeather').click();
+            }
+        });
+
+        console.log('%c🎉 歡迎來到非同步程式設計教學！', 'color: #f43f5e; font-size: 20px; font-weight: bold;');
+    </script>
+</body>
+</html>

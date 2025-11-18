@@ -109,7 +109,7 @@
             <div class="space-y-4">
                 <h3 class="text-lg font-semibold text-gray-700">深色主題</h3>
                 <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-                    <nav class="bg-gray-900 px-6 py-4">
+                    <nav class="bg-gray-100 px-6 py-4">
                         <div class="flex items-center justify-between">
                             <div class="text-2xl font-bold text-white">DarkNav</div>
                             <ul class="flex items-center gap-6">
@@ -472,6 +472,63 @@
         </div>
 
     </div>
+
+    <!-- JavaScript for Interactive Menu -->
+    <script>
+        // Find the responsive navbar section
+        const responsiveNavSection = document.querySelectorAll('section')[3]; // 4th section (index 3)
+        const mobileMenuBtn = responsiveNavSection.querySelector('.md\\:hidden.text-white');
+        const mobileMenu = responsiveNavSection.querySelector('nav > div:last-child');
+
+        // Initially hide the mobile menu
+        mobileMenu.classList.add('hidden');
+
+        // Toggle mobile menu when button is clicked
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+
+            // Change icon when menu is open
+            const svg = this.querySelector('svg path');
+            if (mobileMenu.classList.contains('hidden')) {
+                // Show hamburger icon
+                svg.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+            } else {
+                // Show close icon (X)
+                svg.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+            }
+
+            console.log('Mobile menu toggled:', !mobileMenu.classList.contains('hidden'));
+        });
+
+        // Add animation to mobile menu items
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+        mobileMenuLinks.forEach((link, index) => {
+            link.addEventListener('click', function() {
+                // Close menu when a link is clicked
+                mobileMenu.classList.add('hidden');
+                const svg = mobileMenuBtn.querySelector('svg path');
+                svg.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+
+                console.log('Link clicked:', this.textContent.trim());
+            });
+        });
+
+        // Add info banner
+        const infoBanner = document.createElement('div');
+        infoBanner.className = 'fixed bottom-4 right-4 bg-indigo-600 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+        infoBanner.innerHTML = '🎉 響應式選單已啟用！試試點擊漢堡圖示';
+        document.body.appendChild(infoBanner);
+
+        // Hide banner after 5 seconds
+        setTimeout(() => {
+            infoBanner.style.opacity = '0';
+            infoBanner.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => infoBanner.remove(), 500);
+        }, 5000);
+
+        console.log('🎉 Navigation menu JavaScript loaded!');
+        console.log('💡 Try resizing your window to < 768px to see the mobile menu in action!');
+    </script>
 
 </body>
 </html>

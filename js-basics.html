@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript 基礎 | JavaScript Basics</title>
+    <link rel="stylesheet" href="./src/output.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-8 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-4xl font-bold mb-2">JavaScript 基礎教學</h1>
+            <p class="text-blue-100 text-lg">JavaScript Basics - Variables, Data Types, Operators & Functions</p>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <!-- Section 1: Variables 變數 -->
+        <section class="bg-white rounded-xl shadow-md p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-blue-500 pb-2">
+                1. Variables 變數
+            </h2>
+            <p class="text-gray-600 mb-6">變數用來儲存資料。JavaScript 有三種宣告變數的方式：<code class="bg-gray-100 px-2 py-1 rounded">let</code>, <code class="bg-gray-100 px-2 py-1 rounded">const</code>, <code class="bg-gray-100 px-2 py-1 rounded">var</code></p>
+
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+                <h3 class="font-semibold text-lg mb-2">說明 Explanation:</h3>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li><strong>let</strong>: 可以重新賦值的變數 (reassignable)</li>
+                    <li><strong>const</strong>: 不能重新賦值的常數 (constant)</li>
+                    <li><strong>var</strong>: 舊式寫法，建議使用 let/const (legacy, avoid using)</li>
+                </ul>
+            </div>
+
+            <div class="bg-gray-700 text-green-400 p-6 rounded-lg mb-4 font-mono text-sm overflow-x-auto">
+                <pre>// 使用 let 宣告變數
+let userName = "小明";
+console.log(userName); // 輸出: 小明
+
+userName = "小華"; // 可以重新賦值
+console.log(userName); // 輸出: 小華
+
+// 使用 const 宣告常數
+const PI = 3.14159;
+console.log(PI); // 輸出: 3.14159
+
+// PI = 3.14; // ❌ 錯誤！const 不能重新賦值</pre>
+            </div>
+
+            <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-6">
+                <p class="text-gray-700"><strong>💡 提示：</strong>優先使用 <code class="bg-gray-100 px-2 py-1 rounded">const</code>，只有需要改變值時才用 <code class="bg-gray-100 px-2 py-1 rounded">let</code></p>
+            </div>
+
+            <button id="btnVariables" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition shadow-md">
+                🧪 執行變數範例 Run Variables Demo
+            </button>
+            <div id="outputVariables" class="mt-4 p-4 bg-green-50 border border-green-300 rounded-lg hidden"></div>
+        </section>
+
+        <!-- Section 2: Data Types 資料型別 -->
+        <section class="bg-white rounded-xl shadow-md p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-purple-500 pb-2">
+                2. Data Types 資料型別
+            </h2>
+            <p class="text-gray-600 mb-6">JavaScript 有七種基本資料型別 (7 primitive types)</p>
+
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <div class="bg-white p-4 rounded-lg">
+                    <h3 class="font-bold text-lg mb-2 text-purple-700">1. String 字串</h3>
+                    <code class="text-sm">let name = "John";</code>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-lg mb-2 text-purple-700">2. Number 數字</h3>
+                    <code class="text-sm">let age = 25;</code>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-lg mb-2 text-purple-700">3. Boolean 布林值</h3>
+                    <code class="text-sm">let isStudent = true;</code>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-lg mb-2 text-purple-700">4. Undefined 未定義</h3>
+                    <code class="text-sm">let x; // undefined</code>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-lg mb-2 text-purple-700">5. Null 空值</h3>
+                    <code class="text-sm">let y = null;</code>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-lg mb-2 text-purple-700">6. Symbol 符號</h3>
+                    <code class="text-sm">let sym = Symbol();</code>
+                </div>
+            </div>
+
+            <div class="bg-gray-100 text-green-400 p-6 rounded-lg mb-4 font-mono text-sm overflow-x-auto">
+                <pre>// typeof 運算子可以查看資料型別
+let name = "Alice";
+let age = 30;
+let isActive = true;
+let nothing = null;
+let notDefined;
+
+console.log(typeof name);      // "string"
+console.log(typeof age);       // "number"
+console.log(typeof isActive);  // "boolean"
+console.log(typeof nothing);   // "object" (這是 JS 的歷史 bug)
+console.log(typeof notDefined);// "undefined"</pre>
+            </div>
+
+            <button id="btnDataTypes" class="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition shadow-md">
+                🧪 執行資料型別範例 Run Data Types Demo
+            </button>
+            <div id="outputDataTypes" class="mt-4 p-4 bg-green-50 border border-green-300 rounded-lg hidden"></div>
+        </section>
+
+        <!-- Section 3: Operators 運算子 -->
+        <section class="bg-white rounded-xl shadow-md p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-green-500 pb-2">
+                3. Operators 運算子
+            </h2>
+
+            <div class="space-y-6">
+                <!-- Arithmetic Operators -->
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">算術運算子 Arithmetic Operators</h3>
+                    <div class="bg-gray-100 text-green-400 p-6 rounded-lg font-mono text-sm overflow-x-auto">
+                        <pre>let a = 10;
+let b = 3;
+
+console.log(a + b);  // 13  加法 addition
+console.log(a - b);  // 7   減法 subtraction
+console.log(a * b);  // 30  乘法 multiplication
+console.log(a / b);  // 3.333... 除法 division
+console.log(a % b);  // 1   餘數 modulus (remainder)
+console.log(a ** b); // 1000 次方 exponentiation</pre>
+                    </div>
+                </div>
+
+                <!-- Comparison Operators -->
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">比較運算子 Comparison Operators</h3>
+                    <div class="bg-gray-100 text-green-400 p-6 rounded-lg font-mono text-sm overflow-x-auto">
+                        <pre>console.log(5 &gt; 3);   // true  大於 greater than
+console.log(5 &lt; 3);   // false 小於 less than
+console.log(5 &gt;= 5);  // true  大於等於 greater or equal
+console.log(5 &lt;= 3);  // false 小於等於 less or equal
+console.log(5 == "5");  // true  相等（會轉型）equal (with type coercion)
+console.log(5 === "5"); // false 嚴格相等 strict equal (no type coercion)
+console.log(5 != "5");  // false 不等於 not equal
+console.log(5 !== "5"); // true  嚴格不等於 strict not equal</pre>
+                    </div>
+                    <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mt-4">
+                        <p class="text-gray-700"><strong>💡 重要：</strong>建議總是使用 <code class="bg-gray-100 px-2 py-1 rounded">===</code> 和 <code class="bg-gray-100 px-2 py-1 rounded">!==</code>，避免意外的型別轉換</p>
+                    </div>
+                </div>
+
+                <!-- Logical Operators -->
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">邏輯運算子 Logical Operators</h3>
+                    <div class="bg-gray-100 text-green-400 p-6 rounded-lg font-mono text-sm overflow-x-auto">
+                        <pre>let isAdult = true;
+let hasLicense = false;
+
+console.log(isAdult && hasLicense); // false (AND 兩者都要 true)
+console.log(isAdult || hasLicense); // true  (OR 一個 true 即可)
+console.log(!isAdult);              // false (NOT 反轉)</pre>
+                    </div>
+                </div>
+            </div>
+
+            <button id="btnOperators" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition shadow-md mt-6">
+                🧪 執行運算子範例 Run Operators Demo
+            </button>
+            <div id="outputOperators" class="mt-4 p-4 bg-green-50 border border-green-300 rounded-lg hidden"></div>
+        </section>
+
+        <!-- Section 4: Functions 函式 -->
+        <section class="bg-white rounded-xl shadow-md p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-red-500 pb-2">
+                4. Functions 函式
+            </h2>
+            <p class="text-gray-600 mb-6">函式是可重複使用的程式碼區塊。JavaScript 有多種定義函式的方式。</p>
+
+            <div class="space-y-6">
+                <!-- Function Declaration -->
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">函式宣告 Function Declaration</h3>
+                    <div class="bg-gray-100 text-green-400 p-6 rounded-lg font-mono text-sm overflow-x-auto">
+                        <pre>// 基本函式
+function greet(name) {
+    return "Hello, " + name + "!";
+}
+
+console.log(greet("Alice")); // "Hello, Alice!"
+
+// 有預設參數的函式
+function greetWithDefault(name = "Guest") {
+    return "Hello, " + name + "!";
+}
+
+console.log(greetWithDefault());        // "Hello, Guest!"
+console.log(greetWithDefault("Bob"));   // "Hello, Bob!"</pre>
+                    </div>
+                </div>
+
+                <!-- Arrow Functions -->
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">箭頭函式 Arrow Functions (ES6)</h3>
+                    <div class="bg-gray-100 text-green-400 p-6 rounded-lg font-mono text-sm overflow-x-auto">
+                        <pre>// 傳統函式
+const add = function(a, b) {
+    return a + b;
+};
+
+// 箭頭函式（簡潔版）
+const addArrow = (a, b) => a + b;
+
+console.log(add(5, 3));      // 8
+console.log(addArrow(5, 3)); // 8
+
+// 單一參數可省略括號
+const square = x => x * x;
+console.log(square(4)); // 16
+
+// 無參數需要空括號
+const getRandom = () => Math.random();
+console.log(getRandom()); // 隨機數字</pre>
+                    </div>
+                </div>
+
+                <!-- Practice: Calculator Function -->
+                <div class="bg-gradient-to-r from-red-50 to-orange-50 p-6 rounded-lg border-2 border-red-300">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">🎯 實作練習：計算機函式</h3>
+                    <p class="text-gray-700 mb-4">輸入兩個數字和運算符號，看看計算結果！</p>
+
+                    <div class="flex gap-4 mb-4 flex-wrap">
+                        <input type="number" id="num1" placeholder="數字 1" class="border-2 border-gray-300 rounded-lg px-4 py-2 w-32">
+                        <select id="operator" class="border-2 border-gray-300 rounded-lg px-4 py-2">
+                            <option value="+">+ 加</option>
+                            <option value="-">- 減</option>
+                            <option value="*">× 乘</option>
+                            <option value="/">÷ 除</option>
+                        </select>
+                        <input type="number" id="num2" placeholder="數字 2" class="border-2 border-gray-300 rounded-lg px-4 py-2 w-32">
+                        <button id="btnCalculate" class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition shadow-md">
+                            計算 Calculate
+                        </button>
+                    </div>
+                    <div id="calcResult" class="text-xl font-bold text-gray-800"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Conditionals 條件判斷 -->
+        <section class="bg-white rounded-xl shadow-md p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-indigo-500 pb-2">
+                5. Conditionals 條件判斷
+            </h2>
+
+            <div class="space-y-6">
+                <!-- if/else -->
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">if / else if / else</h3>
+                    <div class="bg-gray-100 text-green-400 p-6 rounded-lg font-mono text-sm overflow-x-auto">
+                        <pre>let score = 85;
+
+if (score >= 90) {
+    console.log("優秀 Excellent!");
+} else if (score >= 70) {
+    console.log("良好 Good!");
+} else if (score >= 60) {
+    console.log("及格 Pass");
+} else {
+    console.log("不及格 Fail");
+}
+
+// 輸出: "良好 Good!"</pre>
+                    </div>
+                </div>
+
+                <!-- Ternary Operator -->
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">三元運算子 Ternary Operator</h3>
+                    <div class="bg-gray-100 text-green-400 p-6 rounded-lg font-mono text-sm overflow-x-auto">
+                        <pre>// 語法: condition ? valueIfTrue : valueIfFalse
+let age = 20;
+let status = age >= 18 ? "成人 Adult" : "未成年 Minor";
+console.log(status); // "成人 Adult"
+
+// 可以用來簡化簡單的 if/else
+let price = 100;
+let discount = price > 50 ? price * 0.9 : price;
+console.log(discount); // 90</pre>
+                    </div>
+                </div>
+
+                <!-- Interactive Age Checker -->
+                <div class="bg-gradient-to-r from-indigo-50 to-blue-50 p-6 rounded-lg border-2 border-indigo-300">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">🎯 實作練習：年齡檢查器</h3>
+                    <div class="flex gap-4 mb-4 items-center flex-wrap">
+                        <input type="number" id="ageInput" placeholder="輸入年齡" class="border-2 border-gray-300 rounded-lg px-4 py-2 w-40">
+                        <button id="btnCheckAge" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition shadow-md">
+                            檢查 Check Age
+                        </button>
+                    </div>
+                    <div id="ageResult" class="text-lg font-semibold text-gray-800"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Reference 快速參考 -->
+        <section class="bg-gradient-to-r from-gray-800 to-gray-900 text-white rounded-xl shadow-md p-8">
+            <h2 class="text-3xl font-bold mb-6">📚 Quick Reference 快速參考</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-xl font-bold mb-3 text-blue-300">變數宣告</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>✅ <code class="bg-gray-700 px-2 py-1 rounded">const</code> - 優先使用</li>
+                        <li>✅ <code class="bg-gray-700 px-2 py-1 rounded">let</code> - 需要改值時</li>
+                        <li>❌ <code class="bg-gray-700 px-2 py-1 rounded">var</code> - 避免使用</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-3 text-blue-300">資料型別</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>String, Number, Boolean</li>
+                        <li>Undefined, Null, Symbol</li>
+                        <li>Object (Array, Function...)</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-3 text-blue-300">重要觀念</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>使用 <code class="bg-gray-700 px-2 py-1 rounded">===</code> 不是 <code class="bg-gray-700 px-2 py-1 rounded">==</code></li>
+                        <li>箭頭函式更簡潔</li>
+                        <li>三元運算子適合簡單條件</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-3 text-blue-300">下一步</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>→ 陣列與物件</li>
+                        <li>→ 迴圈與迭代</li>
+                        <li>→ DOM 操作</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- JavaScript Code -->
+    <script>
+        // Section 1: Variables Demo
+        document.getElementById('btnVariables').addEventListener('click', function() {
+            const output = document.getElementById('outputVariables');
+
+            // 執行範例
+            let userName = "小明 (Ming)";
+            const PI = 3.14159;
+
+            // 顯示結果
+            output.classList.remove('hidden');
+            output.innerHTML = `
+                <div class="space-y-2">
+                    <p><strong>變數 userName:</strong> ${userName}</p>
+                    <p><strong>常數 PI:</strong> ${PI}</p>
+                    <p class="text-green-700 font-semibold">✓ 執行成功！查看瀏覽器 Console 可看到更多資訊</p>
+                </div>
+            `;
+
+            console.log('=== Variables Demo ===');
+            console.log('userName:', userName);
+            console.log('PI:', PI);
+        });
+
+        // Section 2: Data Types Demo
+        document.getElementById('btnDataTypes').addEventListener('click', function() {
+            const output = document.getElementById('outputDataTypes');
+
+            // 示範各種型別
+            let name = "Alice";
+            let age = 30;
+            let isActive = true;
+            let nothing = null;
+            let notDefined;
+
+            output.classList.remove('hidden');
+            output.innerHTML = `
+                <div class="space-y-2 font-mono text-sm">
+                    <p>typeof "${name}" = <strong>${typeof name}</strong></p>
+                    <p>typeof ${age} = <strong>${typeof age}</strong></p>
+                    <p>typeof ${isActive} = <strong>${typeof isActive}</strong></p>
+                    <p>typeof null = <strong>${typeof nothing}</strong> (歷史 bug)</p>
+                    <p>typeof undefined = <strong>${typeof notDefined}</strong></p>
+                </div>
+            `;
+
+            console.log('=== Data Types Demo ===');
+            console.log('typeof name:', typeof name);
+            console.log('typeof age:', typeof age);
+            console.log('typeof isActive:', typeof isActive);
+            console.log('typeof nothing:', typeof nothing);
+            console.log('typeof notDefined:', typeof notDefined);
+        });
+
+        // Section 3: Operators Demo
+        document.getElementById('btnOperators').addEventListener('click', function() {
+            const output = document.getElementById('outputOperators');
+
+            let a = 10;
+            let b = 3;
+
+            output.classList.remove('hidden');
+            output.innerHTML = `
+                <div class="space-y-2">
+                    <h4 class="font-bold text-lg mb-2">算術運算 (a=10, b=3):</h4>
+                    <p>a + b = <strong>${a + b}</strong></p>
+                    <p>a - b = <strong>${a - b}</strong></p>
+                    <p>a * b = <strong>${a * b}</strong></p>
+                    <p>a / b = <strong>${(a / b).toFixed(2)}</strong></p>
+                    <p>a % b = <strong>${a % b}</strong> (餘數)</p>
+                    <p>a ** b = <strong>${a ** b}</strong> (10的3次方)</p>
+
+                    <h4 class="font-bold text-lg mb-2 mt-4">比較運算:</h4>
+                    <p>5 == "5" = <strong>${5 == "5"}</strong> (相等，會轉型)</p>
+                    <p>5 === "5" = <strong>${5 === "5"}</strong> (嚴格相等，建議使用)</p>
+
+                    <h4 class="font-bold text-lg mb-2 mt-4">邏輯運算:</h4>
+                    <p>true && false = <strong>${true && false}</strong></p>
+                    <p>true || false = <strong>${true || false}</strong></p>
+                    <p>!true = <strong>${!true}</strong></p>
+                </div>
+            `;
+
+            console.log('=== Operators Demo ===');
+            console.log('Arithmetic:', a + b, a - b, a * b, a / b, a % b, a ** b);
+            console.log('Comparison:', 5 == "5", 5 === "5");
+            console.log('Logical:', true && false, true || false, !true);
+        });
+
+        // Section 4: Calculator Function
+        function calculate(num1, operator, num2) {
+            switch(operator) {
+                case '+':
+                    return num1 + num2;
+                case '-':
+                    return num1 - num2;
+                case '*':
+                    return num1 * num2;
+                case '/':
+                    if (num2 === 0) return 'Error: 不能除以零 Cannot divide by zero';
+                    return num1 / num2;
+                default:
+                    return 'Error: 無效運算子 Invalid operator';
+            }
+        }
+
+        document.getElementById('btnCalculate').addEventListener('click', function() {
+            const num1 = parseFloat(document.getElementById('num1').value);
+            const num2 = parseFloat(document.getElementById('num2').value);
+            const operator = document.getElementById('operator').value;
+            const resultDiv = document.getElementById('calcResult');
+
+            if (isNaN(num1) || isNaN(num2)) {
+                resultDiv.innerHTML = '⚠️ 請輸入有效的數字 Please enter valid numbers';
+                resultDiv.className = 'text-xl font-bold text-red-600';
+                return;
+            }
+
+            const result = calculate(num1, operator, num2);
+            resultDiv.innerHTML = `${num1} ${operator} ${num2} = <span class="text-green-600">${result}</span>`;
+            resultDiv.className = 'text-xl font-bold text-gray-800';
+
+            console.log(`Calculator: ${num1} ${operator} ${num2} = ${result}`);
+        });
+
+        // Section 5: Age Checker
+        document.getElementById('btnCheckAge').addEventListener('click', function() {
+            const age = parseInt(document.getElementById('ageInput').value);
+            const resultDiv = document.getElementById('ageResult');
+
+            if (isNaN(age) || age < 0) {
+                resultDiv.innerHTML = '⚠️ 請輸入有效的年齡 Please enter a valid age';
+                resultDiv.className = 'text-lg font-semibold text-red-600';
+                return;
+            }
+
+            let message, color;
+
+            if (age < 13) {
+                message = `${age} 歲 - 兒童 Child 👶`;
+                color = 'text-blue-600';
+            } else if (age < 18) {
+                message = `${age} 歲 - 青少年 Teenager 🧒`;
+                color = 'text-purple-600';
+            } else if (age < 65) {
+                message = `${age} 歲 - 成人 Adult 👨`;
+                color = 'text-green-600';
+            } else {
+                message = `${age} 歲 - 長者 Senior 👴`;
+                color = 'text-orange-600';
+            }
+
+            resultDiv.innerHTML = message;
+            resultDiv.className = `text-lg font-semibold ${color}`;
+
+            console.log('Age Check:', message);
+        });
+
+        // Welcome message
+        console.log('%c🎉 歡迎來到 JavaScript 基礎教學！', 'color: #3b82f6; font-size: 20px; font-weight: bold;');
+        console.log('%cWelcome to JavaScript Basics Tutorial!', 'color: #3b82f6; font-size: 16px;');
+        console.log('按下各個按鈕來執行範例，並查看 Console 輸出！');
+        console.log('Click buttons to run demos and check the Console output!');
+    </script>
+</body>
+</html>

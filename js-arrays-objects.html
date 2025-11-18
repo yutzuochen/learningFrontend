@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript 陣列與物件 | Arrays & Objects</title>
+    <link rel="stylesheet" href="./src/output.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-8 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-4xl font-bold mb-2">JavaScript 陣列與物件</h1>
+            <p class="text-emerald-100 text-lg">Arrays & Objects - Working with Data Structures</p>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <!-- Section 1: Arrays 陣列 -->
+        <section class="bg-white rounded-xl shadow-md p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-emerald-500 pb-2">
+                1. Arrays 陣列基礎
+            </h2>
+            <p class="text-gray-600 mb-6">陣列是用來儲存多個值的有序集合。索引從 0 開始計算。</p>
+
+            <div class="bg-gray-100 text-green-400 p-6 rounded-lg mb-4 font-mono text-sm overflow-x-auto">
+                <pre>// 建立陣列的方式
+let fruits = ["蘋果", "香蕉", "橘子"];
+let numbers = [1, 2, 3, 4, 5];
+let mixed = [1, "hello", true, null]; // 可以混合不同型別
+
+// 存取陣列元素（索引從 0 開始）
+console.log(fruits[0]); // "蘋果"
+console.log(fruits[1]); // "香蕉"
+console.log(fruits[2]); // "橘子"
+
+// 取得陣列長度
+console.log(fruits.length); // 3
+
+// 修改元素
+fruits[1] = "芒果";
+console.log(fruits); // ["蘋果", "芒果", "橘子"]</pre>
+            </div>
+
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+                <h3 class="font-semibold text-lg mb-2">重要觀念：</h3>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li>陣列索引從 <strong>0</strong> 開始，不是 1</li>
+                    <li>最後一個元素的索引是 <code class="bg-gray-100 px-2 py-1 rounded">length - 1</code></li>
+                    <li>可以用 <code class="bg-gray-100 px-2 py-1 rounded">arr[arr.length - 1]</code> 取得最後一個元素</li>
+                </ul>
+            </div>
+
+            <button id="btnArrayBasics" class="bg-emerald-600 text-white px-6 py-3 rounded-lg hover:bg-emerald-700 transition shadow-md">
+                🧪 執行陣列基礎範例
+            </button>
+            <div id="outputArrayBasics" class="mt-4 p-4 bg-green-50 border border-green-300 rounded-lg hidden"></div>
+        </section>
+
+        <!-- Section 2: Array Methods 陣列方法 -->
+        <section class="bg-white rounded-xl shadow-md p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-teal-500 pb-2">
+                2. Array Methods 常用陣列方法
+            </h2>
+
+            <div class="space-y-6">
+                <!-- Adding/Removing Elements -->
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">新增／刪除元素</h3>
+                    <div class="bg-gray-100 text-green-400 p-6 rounded-lg font-mono text-sm overflow-x-auto">
+                        <pre>let colors = ["紅", "綠", "藍"];
+
+// push() - 在尾端新增元素
+colors.push("黃");
+console.log(colors); // ["紅", "綠", "藍", "黃"]
+
+// pop() - 移除最後一個元素並回傳
+let last = colors.pop();
+console.log(last);   // "黃"
+console.log(colors); // ["紅", "綠", "藍"]
+
+// unshift() - 在開頭新增元素
+colors.unshift("紫");
+console.log(colors); // ["紫", "紅", "綠", "藍"]
+
+// shift() - 移除第一個元素並回傳
+let first = colors.shift();
+console.log(first);  // "紫"
+console.log(colors); // ["紅", "綠", "藍"]</pre>
+                    </div>
+                </div>
+
+                <!-- Searching -->
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">搜尋與檢查</h3>
+                    <div class="bg-gray-100 text-green-400 p-6 rounded-lg font-mono text-sm overflow-x-auto">
+                        <pre>let fruits = ["蘋果", "香蕉", "橘子", "香蕉"];
+
+// indexOf() - 找出第一個符合的索引
+console.log(fruits.indexOf("香蕉")); // 1
+
+// lastIndexOf() - 找出最後一個符合的索引
+console.log(fruits.lastIndexOf("香蕉")); // 3
+
+// includes() - 檢查是否包含某元素
+console.log(fruits.includes("蘋果")); // true
+console.log(fruits.includes("草莓")); // false
+
+// find() - 找出第一個符合條件的元素
+let nums = [5, 12, 8, 130, 44];
+let found = nums.find(num =&gt; num &gt; 10);
+console.log(found); // 12</pre>
+                    </div>
+                </div>
+
+                <!-- Transformation -->
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">轉換陣列 (重要！)</h3>
+                    <div class="bg-gray-100 text-green-400 p-6 rounded-lg font-mono text-sm overflow-x-auto">
+                        <pre>let numbers = [1, 2, 3, 4, 5];
+
+// map() - 對每個元素執行操作，回傳新陣列
+let doubled = numbers.map(num => num * 2);
+console.log(doubled); // [2, 4, 6, 8, 10]
+
+// filter() - 篩選符合條件的元素
+let evens = numbers.filter(num => num % 2 === 0);
+console.log(evens); // [2, 4]
+
+// reduce() - 將陣列累積成單一值
+let sum = numbers.reduce((total, num) => total + num, 0);
+console.log(sum); // 15
+
+// forEach() - 對每個元素執行函式（不回傳新陣列）
+numbers.forEach(num => {
+    console.log(`數字: ${num}`);
+});</pre>
+                    </div>
+                </div>
+            </div>
+
+            <button id="btnArrayMethods" class="bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700 transition shadow-md mt-6">
+                🧪 執行陣列方法範例
+            </button>
+            <div id="outputArrayMethods" class="mt-4 p-4 bg-green-50 border border-green-300 rounded-lg hidden"></div>
+        </section>
+
+        <!-- Section 3: Interactive Array Demo -->
+        <section class="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl shadow-md p-8 mb-8 border-2 border-emerald-300">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">
+                🎯 互動練習：待辦清單 Todo List
+            </h2>
+            <p class="text-gray-600 mb-6">實作一個簡單的待辦清單，練習陣列的新增、刪除和顯示！</p>
+
+            <div class="flex gap-4 mb-6 flex-wrap">
+                <input type="text" id="todoInput" placeholder="輸入待辦事項..." class="flex-1 min-w-[200px] border-2 border-gray-300 rounded-lg px-4 py-2">
+                <button id="btnAddTodo" class="bg-emerald-600 text-white px-6 py-2 rounded-lg hover:bg-emerald-700 transition shadow-md">
+                    ➕ 新增
+                </button>
+                <button id="btnClearTodos" class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition shadow-md">
+                    🗑️ 清空全部
+                </button>
+            </div>
+
+            <div id="todoList" class="space-y-2"></div>
+            <div id="todoStats" class="mt-4 text-gray-600 font-semibold"></div>
+        </section>
+
+        <!-- Section 4: Objects 物件 -->
+        <section class="bg-white rounded-xl shadow-md p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-purple-500 pb-2">
+                3. Objects 物件基礎
+            </h2>
+            <p class="text-gray-600 mb-6">物件是用來儲存鍵值對（key-value pairs）的資料結構。</p>
+
+            <div class="bg-gray-100 text-green-400 p-6 rounded-lg mb-4 font-mono text-sm overflow-x-auto">
+                <pre>// 建立物件
+let person = {
+    name: "張三",
+    age: 25,
+    city: "台北",
+    isStudent: true
+};
+
+// 存取屬性的兩種方式
+console.log(person.name);      // "張三" (點記法)
+console.log(person["age"]);    // 25 (括號記法)
+
+// 修改屬性
+person.age = 26;
+person["city"] = "台中";
+
+// 新增屬性
+person.email = "zhang@example.com";
+
+// 刪除屬性
+delete person.isStudent;
+
+console.log(person);
+// { name: "張三", age: 26, city: "台中", email: "zhang@example.com" }</pre>
+            </div>
+
+            <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-6">
+                <h3 class="font-semibold text-lg mb-2">💡 何時使用陣列 vs 物件？</h3>
+                <div class="grid md:grid-cols-2 gap-4 text-gray-700">
+                    <div>
+                        <strong>陣列 Array：</strong>
+                        <ul class="list-disc list-inside mt-2">
+                            <li>有順序的資料</li>
+                            <li>相同類型的多個項目</li>
+                            <li>需要用索引存取</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <strong>物件 Object：</strong>
+                        <ul class="list-disc list-inside mt-2">
+                            <li>描述一個實體的屬性</li>
+                            <li>有意義的鍵名</li>
+                            <li>需要用名稱存取</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <button id="btnObjectBasics" class="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition shadow-md">
+                🧪 執行物件基礎範例
+            </button>
+            <div id="outputObjectBasics" class="mt-4 p-4 bg-green-50 border border-green-300 rounded-lg hidden"></div>
+        </section>
+
+        <!-- Section 5: Object Methods -->
+        <section class="bg-white rounded-xl shadow-md p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-pink-500 pb-2">
+                4. Object Methods 物件方法與進階操作
+            </h2>
+
+            <div class="space-y-6">
+                <!-- Methods in Objects -->
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">物件中的方法 (函式)</h3>
+                    <div class="bg-gray-100 text-green-400 p-6 rounded-lg font-mono text-sm overflow-x-auto">
+                        <pre>// 物件可以包含函式（稱為方法）
+let calculator = {
+    value: 0,
+    add: function(num) {
+        this.value += num;
+        return this;
+    },
+    subtract: function(num) {
+        this.value -= num;
+        return this;
+    },
+    getResult: function() {
+        return this.value;
+    }
+};
+
+// 鏈式呼叫
+calculator.add(10).subtract(3).add(5);
+console.log(calculator.getResult()); // 12
+
+// ES6 簡寫方式
+let person = {
+    name: "Alice",
+    greet() {
+        return `Hello, I'm ${this.name}`;
+    }
+};
+
+console.log(person.greet()); // "Hello, I'm Alice"</pre>
+                    </div>
+                </div>
+
+                <!-- Object Utilities -->
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">Object 靜態方法</h3>
+                    <div class="bg-gray-100 text-green-400 p-6 rounded-lg font-mono text-sm overflow-x-auto">
+                        <pre>let student = {
+    name: "小明",
+    age: 20,
+    grade: "A"
+};
+
+// Object.keys() - 取得所有鍵（key）
+console.log(Object.keys(student));
+// ["name", "age", "grade"]
+
+// Object.values() - 取得所有值（value）
+console.log(Object.values(student));
+// ["小明", 20, "A"]
+
+// Object.entries() - 取得鍵值對陣列
+console.log(Object.entries(student));
+// [["name", "小明"], ["age", 20], ["grade", "A"]]
+
+// 遍歷物件
+Object.entries(student).forEach(([key, value]) => {
+    console.log(`${key}: ${value}`);
+});</pre>
+                    </div>
+                </div>
+
+                <!-- Destructuring -->
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">解構賦值 Destructuring (ES6)</h3>
+                    <div class="bg-gray-100 text-green-400 p-6 rounded-lg font-mono text-sm overflow-x-auto">
+                        <pre>// 物件解構
+let user = {
+    name: "Bob",
+    age: 30,
+    email: "bob@example.com"
+};
+
+let { name, age, email } = user;
+console.log(name);  // "Bob"
+console.log(age);   // 30
+console.log(email); // "bob@example.com"
+
+// 陣列解構
+let colors = ["red", "green", "blue"];
+let [first, second, third] = colors;
+console.log(first);  // "red"
+console.log(second); // "green"
+
+// 預設值
+let { country = "Taiwan" } = user;
+console.log(country); // "Taiwan"</pre>
+                    </div>
+                </div>
+            </div>
+
+            <button id="btnObjectMethods" class="bg-pink-600 text-white px-6 py-3 rounded-lg hover:bg-pink-700 transition shadow-md mt-6">
+                🧪 執行物件方法範例
+            </button>
+            <div id="outputObjectMethods" class="mt-4 p-4 bg-green-50 border border-green-300 rounded-lg hidden"></div>
+        </section>
+
+        <!-- Section 6: Array of Objects -->
+        <section class="bg-white rounded-xl shadow-md p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-orange-500 pb-2">
+                5. Array of Objects 物件陣列 (實務應用)
+            </h2>
+            <p class="text-gray-600 mb-6">在實際開發中，我們經常需要處理物件陣列，例如使用者列表、商品清單等。</p>
+
+            <div class="bg-gray-100 text-green-400 p-6 rounded-lg mb-4 font-mono text-sm overflow-x-auto">
+                <pre>// 常見的資料格式：物件陣列
+let students = [
+    { id: 1, name: "小明", score: 85 },
+    { id: 2, name: "小華", score: 92 },
+    { id: 3, name: "小美", score: 78 }
+];
+
+// 找出成績大於 80 的學生
+let highScorers = students.filter(student => student.score > 80);
+console.log(highScorers);
+
+// 取得所有學生的名字
+let names = students.map(student => student.name);
+console.log(names); // ["小明", "小華", "小美"]
+
+// 計算平均分數
+let avgScore = students.reduce((sum, student) => {
+    return sum + student.score;
+}, 0) / students.length;
+console.log(avgScore); // 85
+
+// 找出特定學生
+let found = students.find(student => student.name === "小華");
+console.log(found); // { id: 2, name: "小華", score: 92 }</pre>
+            </div>
+
+            <button id="btnArrayOfObjects" class="bg-orange-600 text-white px-6 py-3 rounded-lg hover:bg-orange-700 transition shadow-md">
+                🧪 執行物件陣列範例
+            </button>
+            <div id="outputArrayOfObjects" class="mt-4 p-4 bg-green-50 border border-green-300 rounded-lg hidden"></div>
+        </section>
+
+        <!-- Interactive Product Demo -->
+        <section class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl shadow-md p-8 mb-8 border-2 border-purple-300">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">
+                🎯 互動練習：商品管理系統
+            </h2>
+            <p class="text-gray-600 mb-6">使用物件陣列來管理商品，並實作篩選和排序功能！</p>
+
+            <div class="grid md:grid-cols-3 gap-4 mb-6">
+                <button id="btnShowAll" class="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition shadow-md">
+                    顯示全部
+                </button>
+                <button id="btnFilterExpensive" class="bg-pink-600 text-white px-6 py-3 rounded-lg hover:bg-pink-700 transition shadow-md">
+                    只顯示 $50 以上
+                </button>
+                <button id="btnSortByPrice" class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition shadow-md">
+                    依價格排序
+                </button>
+            </div>
+
+            <div id="productList" class="grid md:grid-cols-3 gap-4"></div>
+        </section>
+
+        <!-- Quick Reference -->
+        <section class="bg-gradient-to-r from-gray-800 to-gray-900 text-white rounded-xl shadow-md p-8">
+            <h2 class="text-3xl font-bold mb-6">📚 Quick Reference 快速參考</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-xl font-bold mb-3 text-emerald-300">重要陣列方法</h3>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">map()</code> - 轉換每個元素</li>
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">filter()</code> - 篩選元素</li>
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">reduce()</code> - 累積成單一值</li>
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">find()</code> - 找第一個符合的</li>
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">forEach()</code> - 遍歷陣列</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-3 text-emerald-300">重要物件方法</h3>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">Object.keys()</code> - 取得所有鍵</li>
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">Object.values()</code> - 取得所有值</li>
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">Object.entries()</code> - 取得鍵值對</li>
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">{...obj}</code> - 展開運算子</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-3 text-emerald-300">關鍵觀念</h3>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li>陣列索引從 0 開始</li>
+                        <li>map/filter 回傳新陣列</li>
+                        <li>物件用 {} 陣列用 []</li>
+                        <li>解構賦值讓程式碼更簡潔</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-3 text-emerald-300">下一步</h3>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li>→ DOM 操作與事件</li>
+                        <li>→ 表單處理與驗證</li>
+                        <li>→ 非同步程式設計</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- JavaScript Code -->
+    <script>
+        // Section 1: Array Basics Demo
+        document.getElementById('btnArrayBasics').addEventListener('click', function() {
+            const output = document.getElementById('outputArrayBasics');
+
+            let fruits = ["蘋果", "香蕉", "橘子"];
+
+            output.classList.remove('hidden');
+            output.innerHTML = `
+                <div class="space-y-2">
+                    <p><strong>原始陣列:</strong> [${fruits.join(', ')}]</p>
+                    <p><strong>第一個元素 (index 0):</strong> ${fruits[0]}</p>
+                    <p><strong>第二個元素 (index 1):</strong> ${fruits[1]}</p>
+                    <p><strong>陣列長度:</strong> ${fruits.length}</p>
+                    <p><strong>最後一個元素:</strong> ${fruits[fruits.length - 1]}</p>
+                    <p class="text-green-700 font-semibold mt-4">✓ 查看 Console 了解更多！</p>
+                </div>
+            `;
+
+            console.log('=== Array Basics Demo ===');
+            console.log('fruits:', fruits);
+            console.log('第一個元素:', fruits[0]);
+            console.log('陣列長度:', fruits.length);
+        });
+
+        // Section 2: Array Methods Demo
+        document.getElementById('btnArrayMethods').addEventListener('click', function() {
+            const output = document.getElementById('outputArrayMethods');
+
+            let numbers = [1, 2, 3, 4, 5];
+            let doubled = numbers.map(num => num * 2);
+            let evens = numbers.filter(num => num % 2 === 0);
+            let sum = numbers.reduce((total, num) => total + num, 0);
+
+            output.classList.remove('hidden');
+            output.innerHTML = `
+                <div class="space-y-3">
+                    <p><strong>原始陣列:</strong> [${numbers.join(', ')}]</p>
+                    <p><strong>map() - 每個元素 × 2:</strong> [${doubled.join(', ')}]</p>
+                    <p><strong>filter() - 只要偶數:</strong> [${evens.join(', ')}]</p>
+                    <p><strong>reduce() - 總和:</strong> ${sum}</p>
+                    <p class="text-green-700 font-semibold mt-4">✓ 這些方法不會改變原始陣列！</p>
+                </div>
+            `;
+
+            console.log('=== Array Methods Demo ===');
+            console.log('原始:', numbers);
+            console.log('doubled:', doubled);
+            console.log('evens:', evens);
+            console.log('sum:', sum);
+        });
+
+        // Section 3: Todo List
+        let todos = [];
+
+        function renderTodos() {
+            const todoList = document.getElementById('todoList');
+            const todoStats = document.getElementById('todoStats');
+
+            if (todos.length === 0) {
+                todoList.innerHTML = '<p class="text-gray-500 text-center py-4">目前沒有待辦事項</p>';
+                todoStats.textContent = '';
+                return;
+            }
+
+            todoList.innerHTML = todos.map((todo, index) => `
+                <div class="flex items-center justify-between bg-white p-4 rounded-lg shadow-md">
+                    <span class="text-gray-700">${index + 1}. ${todo}</span>
+                    <button onclick="removeTodo(${index})" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition text-sm">
+                        刪除
+                    </button>
+                </div>
+            `).join('');
+
+            todoStats.textContent = `共 ${todos.length} 個待辦事項`;
+        }
+
+        document.getElementById('btnAddTodo').addEventListener('click', function() {
+            const input = document.getElementById('todoInput');
+            const todoText = input.value.trim();
+
+            if (todoText) {
+                todos.push(todoText);
+                input.value = '';
+                renderTodos();
+                console.log('新增待辦:', todoText);
+                console.log('目前清單:', todos);
+            }
+        });
+
+        // 支援 Enter 鍵新增
+        document.getElementById('todoInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('btnAddTodo').click();
+            }
+        });
+
+        document.getElementById('btnClearTodos').addEventListener('click', function() {
+            if (todos.length > 0 && confirm('確定要清空所有待辦事項嗎？')) {
+                todos = [];
+                renderTodos();
+                console.log('已清空待辦清單');
+            }
+        });
+
+        function removeTodo(index) {
+            const removed = todos.splice(index, 1);
+            renderTodos();
+            console.log('移除:', removed[0]);
+            console.log('剩餘:', todos);
+        }
+
+        // Section 4: Object Basics Demo
+        document.getElementById('btnObjectBasics').addEventListener('click', function() {
+            const output = document.getElementById('outputObjectBasics');
+
+            let person = {
+                name: "張三",
+                age: 25,
+                city: "台北"
+            };
+
+            person.age = 26;
+            person.email = "zhang@example.com";
+
+            output.classList.remove('hidden');
+            output.innerHTML = `
+                <div class="space-y-2 font-mono text-sm">
+                    <p><strong>name:</strong> ${person.name}</p>
+                    <p><strong>age:</strong> ${person.age} (已修改)</p>
+                    <p><strong>city:</strong> ${person.city}</p>
+                    <p><strong>email:</strong> ${person.email} (新增屬性)</p>
+                    <p class="text-green-700 font-semibold mt-4">✓ 物件可以動態新增/修改/刪除屬性</p>
+                </div>
+            `;
+
+            console.log('=== Object Basics Demo ===');
+            console.log('person:', person);
+        });
+
+        // Section 5: Object Methods Demo
+        document.getElementById('btnObjectMethods').addEventListener('click', function() {
+            const output = document.getElementById('outputObjectMethods');
+
+            let student = {
+                name: "小明",
+                age: 20,
+                grade: "A"
+            };
+
+            let keys = Object.keys(student);
+            let values = Object.values(student);
+            let entries = Object.entries(student);
+
+            output.classList.remove('hidden');
+            output.innerHTML = `
+                <div class="space-y-3 font-mono text-sm">
+                    <p><strong>Object.keys():</strong> [${keys.map(k => `"${k}"`).join(', ')}]</p>
+                    <p><strong>Object.values():</strong> [${values.map(v => typeof v === 'string' ? `"${v}"` : v).join(', ')}]</p>
+                    <p><strong>Object.entries():</strong></p>
+                    <pre class="bg-gray-100 p-2 rounded">${JSON.stringify(entries, null, 2)}</pre>
+                </div>
+            `;
+
+            console.log('=== Object Methods Demo ===');
+            console.log('keys:', keys);
+            console.log('values:', values);
+            console.log('entries:', entries);
+        });
+
+        // Section 6: Array of Objects Demo
+        document.getElementById('btnArrayOfObjects').addEventListener('click', function() {
+            const output = document.getElementById('outputArrayOfObjects');
+
+            let students = [
+                { id: 1, name: "小明", score: 85 },
+                { id: 2, name: "小華", score: 92 },
+                { id: 3, name: "小美", score: 78 }
+            ];
+
+            let highScorers = students.filter(s => s.score > 80);
+            let names = students.map(s => s.name);
+            let avgScore = students.reduce((sum, s) => sum + s.score, 0) / students.length;
+
+            output.classList.remove('hidden');
+            output.innerHTML = `
+                <div class="space-y-3">
+                    <p><strong>所有學生:</strong></p>
+                    <pre class="bg-gray-100 p-3 rounded text-xs overflow-x-auto">${JSON.stringify(students, null, 2)}</pre>
+                    <p><strong>成績 > 80:</strong> ${highScorers.map(s => s.name).join(', ')}</p>
+                    <p><strong>所有名字:</strong> ${names.join(', ')}</p>
+                    <p><strong>平均分數:</strong> ${avgScore.toFixed(1)}</p>
+                </div>
+            `;
+
+            console.log('=== Array of Objects Demo ===');
+            console.log('students:', students);
+            console.log('highScorers:', highScorers);
+            console.log('avgScore:', avgScore);
+        });
+
+        // Product Management System
+        let products = [
+            { id: 1, name: "筆記型電腦", price: 30000, category: "3C" },
+            { id: 2, name: "滑鼠", price: 500, category: "3C" },
+            { id: 3, name: "鍵盤", price: 1500, category: "3C" },
+            { id: 4, name: "咖啡", price: 120, category: "飲料" },
+            { id: 5, name: "茶", price: 80, category: "飲料" },
+            { id: 6, name: "背包", price: 2000, category: "配件" }
+        ];
+
+        function renderProducts(productsToShow) {
+            const productList = document.getElementById('productList');
+
+            productList.innerHTML = productsToShow.map(product => `
+                <div class="bg-white p-6 rounded-lg shadow-md border-2 border-purple-200 hover:border-purple-400 transition">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">${product.name}</h3>
+                    <p class="text-gray-600 mb-2">分類: ${product.category}</p>
+                    <p class="text-2xl font-bold text-purple-600">$${product.price.toLocaleString()}</p>
+                </div>
+            `).join('');
+        }
+
+        document.getElementById('btnShowAll').addEventListener('click', function() {
+            renderProducts(products);
+            console.log('顯示全部商品:', products.length, '個');
+        });
+
+        document.getElementById('btnFilterExpensive').addEventListener('click', function() {
+            const filtered = products.filter(p => p.price >= 50);
+            renderProducts(filtered);
+            console.log('價格 >= $50 的商品:', filtered);
+        });
+
+        document.getElementById('btnSortByPrice').addEventListener('click', function() {
+            const sorted = [...products].sort((a, b) => b.price - a.price);
+            renderProducts(sorted);
+            console.log('依價格排序:', sorted);
+        });
+
+        // 初始化顯示全部商品
+        renderProducts(products);
+
+        // Welcome message
+        console.log('%c🎉 歡迎來到 JavaScript 陣列與物件教學！', 'color: #10b981; font-size: 20px; font-weight: bold;');
+        console.log('按下各個按鈕來執行範例，並查看 Console 輸出！');
+    </script>
+</body>
+</html>

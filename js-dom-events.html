@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript DOM 與事件 | DOM & Events</title>
+    <link rel="stylesheet" href="./src/output.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-violet-600 to-purple-600 text-white py-8 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-4xl font-bold mb-2">JavaScript DOM 與事件處理</h1>
+            <p class="text-violet-100 text-lg">DOM Manipulation & Event Handling</p>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <h3>請注意：<span style="background-color: blue; font-size: 5.5rem; font: bold;">重要訊息</span>必須記住！</h3>
+        </div>
+        <!-- Section 1: What is DOM -->
+        <section class="bg-white rounded-xl shadow-md p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-violet-500 pb-2">
+                1. 什麼是 DOM？
+            </h2>
+            <div class="bg-violet-50 border-l-4 border-violet-500 p-6 mb-6">
+                <h3 class="font-semibold text-lg mb-3">DOM (Document Object Model)</h3>
+                <p class="text-gray-700 mb-3">
+                    DOM 是瀏覽器提供的 API，讓 JavaScript 可以存取和操作 HTML 元素。<br>
+                    把整個網頁看成一棵樹狀結構，每個 HTML 元素都是一個節點（node）。
+                </p>
+                <div class="bg-white p-4 rounded-lg font-mono text-sm">
+                    <pre>document (根節點)
+  └─ html
+      ├─ head
+      │   └─ title
+      └─ body
+          ├─ h1
+          ├─ p
+          └─ div
+              ├─ button
+              └─ span</pre>
+                </div>
+            </div>
+
+            <div class="bg-gray text-green-400 p-6 rounded-lg mb-4 font-mono text-sm overflow-x-auto">
+                <pre>// 取得元素的方法
+document.getElementById('myId');           // 用 ID 選取
+document.querySelector('.myClass');        // 用 CSS 選擇器選取（第一個）
+document.querySelectorAll('.myClass');     // 用 CSS 選擇器選取（全部）
+document.getElementsByClassName('myClass'); // 用 class 選取
+document.getElementsByTagName('div');      // 用標籤名選取</pre>
+            </div>
+
+            <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-6">
+                <p class="text-gray-700">
+                    <strong>💡 建議：</strong>使用 <code class="bg-gray px-2 py-1 rounded">querySelector</code> 和
+                    <code class="bg-gray px-2 py-1 rounded">querySelectorAll</code>，它們更靈活且支援所有 CSS 選擇器！
+                </p>
+            </div>
+
+            <div class="border-2 border-violet-300 rounded-lg p-6 bg-violet-50">
+                <h3 class="font-bold text-lg mb-4">🎯 互動練習：選取元素</h3>
+                <div id="demoBox" class="bg-white p-6 rounded-lg shadow-md mb-4">
+                    <p id="demo-text" class="text-2xl font-bold text-gray-800 mb-4">我是一段文字</p>
+                    <span class="demo-item bg-blue-100 px-3 py-1 rounded mr-2">項目 1</span>
+                    <span class="demo-item bg-green-100 px-3 py-1 rounded mr-2">項目 2</span>
+                    <span class="demo-item bg-pink-100 px-3 py-1 rounded">項目 3</span>
+                </div>
+                <div class="flex gap-3 flex-wrap">
+                    <button id="btnSelectById" class="bg-violet-600 text-white px-4 py-2 rounded-lg hover:bg-violet-700 transition">
+                        選取 #demo-text
+                    </button>
+                    <button id="btnSelectByClass" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">
+                        選取 .demo-item (全部)
+                    </button>
+                </div>
+                <div id="selectResult" class="mt-4 p-3 bg-white rounded-lg text-sm font-mono hidden"></div>
+            </div>
+        </section>
+
+        <!-- Section 2: Manipulating DOM -->
+        <section class="bg-white rounded-xl shadow-md p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-indigo-500 pb-2">
+                2. 操作 DOM 元素
+            </h2>
+
+            <div class="space-y-6">
+                <!-- Changing Content -->
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">修改內容</h3>
+                    <div class="bg-gray text-green-400 p-6 rounded-lg font-mono text-sm overflow-x-auto mb-4">
+                        <pre>let element = document.querySelector('#myElement');
+
+// textContent - 純文字內容
+element.textContent = '新的文字';
+
+// innerHTML - HTML 內容（可包含標籤）
+element.innerHTML = '<strong>粗體文字</strong>';
+
+// value - 取得或設定表單元素的值
+let input = document.querySelector('#myInput');
+input.value = '新的輸入值';</pre>
+                    </div>
+
+                    <div class="border-2 border-indigo-300 rounded-lg p-6 bg-indigo-50">
+                        <h4 class="font-bold mb-4">🎯 試試看：</h4>
+                        <div class="bg-white p-4 rounded-lg shadow mb-4">
+                            <p id="changeText" class="text-xl font-semibold text-gray-800">原始文字</p>
+                        </div>
+                        <div class="flex gap-3 flex-wrap">
+                            <button onclick="changeTextContent()" class="bg-indigo-600 text-red-600 px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
+                                改變文字
+                            </button>
+                            <button onclick="changeHTML()" class="bg-purple-600 text-red-600 px-4 py-2 rounded-lg hover:bg-purple-700 transition">
+                                改變 HTML
+                            </button>
+                            <button onclick="resetText()" class="bg-gray-600 text-red-600 px-4 py-2 rounded-lg hover:bg-gray-700 transition">
+                                重置
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Changing Styles -->
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">修改樣式</h3>
+                    <div class="bg-gray text-green-400 p-6 rounded-lg font-mono text-sm overflow-x-auto mb-4">
+                        <pre>let box = document.querySelector('#box');
+
+// 直接修改 style 屬性
+box.style.backgroundColor = '#3b82f6';
+box.style.color = 'white';
+box.style.padding = '20px';
+box.style.borderRadius = '10px';
+
+// 使用 classList 操作 CSS class
+box.classList.add('active');       // 新增 class
+box.classList.remove('hidden');    // 移除 class
+box.classList.toggle('highlight'); // 切換 class（有就移除，沒有就新增）
+box.classList.contains('active'); // 檢查是否有某個 class</pre>
+                    </div>
+
+                    <div class="border-2 border-blue-300 rounded-lg p-6 bg-blue-50">
+                        <h4 class="font-bold mb-4">🎯 試試看：樣式控制</h4>
+                        <div id="styleBox" class="bg-white p-8 rounded-lg shadow mb-4 text-center text-xl font-bold transition-all duration-300">
+                            我是樣式測試區
+                        </div>
+                        <div class="flex gap-3 flex-wrap">
+                            <button onclick="changeColor()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                                改變顏色
+                            </button>
+                            <button onclick="changeBorder()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+                                改變邊框
+                            </button>
+                            <button onclick="addShadow()" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">
+                                加陰影
+                            </button>
+                            <button onclick="resetStyle()" class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition">
+                                重置
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Creating/Removing Elements -->
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">建立與刪除元素</h3>
+                    <div class="bg-gray text-green-400 p-6 rounded-lg font-mono text-sm overflow-x-auto mb-4">
+                        <pre>// 建立新元素
+let newDiv = document.createElement('div');
+newDiv.textContent = 'Hello!';
+newDiv.classList.add('my-class');
+
+// 新增到頁面
+let container = document.querySelector('#container');
+container.appendChild(newDiv);      // 加到最後
+container.prepend(newDiv);          // 加到最前
+container.insertBefore(newDiv, referenceNode); // 插入特定位置
+
+// 刪除元素
+newDiv.remove();                    // 刪除自己
+container.removeChild(newDiv);      // 父元素刪除子元素</pre>
+                    </div>
+
+                    <div class="border-2 border-green-300 rounded-lg p-6 bg-green-50">
+                        <h4 class="font-bold mb-4">🎯 試試看：動態建立卡片</h4>
+                        <div class="flex gap-3 mb-4 flex-wrap">
+                            <input type="text" id="cardTitle" placeholder="輸入卡片標題..." class="flex-1 min-w-[200px] border-2 border-gray-300 rounded-lg px-4 py-2">
+                            <button onclick="createCard()" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">
+                                ➕ 新增卡片
+                            </button>
+                            <button onclick="clearCards()" class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition">
+                                🗑️ 清空全部
+                            </button>
+                        </div>
+                        <div id="cardContainer" class="grid md:grid-cols-3 gap-4"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Event Listeners -->
+        <section class="bg-white rounded-xl shadow-md p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-pink-500 pb-2">
+                3. 事件監聽 Event Listeners
+            </h2>
+            <p class="text-gray-600 mb-6">事件讓你的網頁可以回應使用者的操作，例如點擊、輸入、滑鼠移動等。</p>
+
+            <div class="bg-gray text-green-400 p-6 rounded-lg mb-6 font-mono text-sm overflow-x-auto">
+                <pre>// addEventListener 語法
+element.addEventListener('事件名稱', function(event) {
+    // 當事件發生時要執行的程式碼
+});
+
+// 常見事件
+button.addEventListener('click', function() {
+    console.log('按鈕被點擊了！');
+});
+
+input.addEventListener('input', function(e) {
+    console.log('輸入的值:', e.target.value);
+});
+
+div.addEventListener('mouseenter', function() {
+    console.log('滑鼠進入了！');
+});</pre>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <div class="bg-pink-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-pink-700 mb-2">滑鼠事件</h4>
+                    <ul class="text-sm space-y-1 text-gray-700">
+                        <li>• <code>click</code> - 點擊</li>
+                        <li>• <code>dblclick</code> - 雙擊</li>
+                        <li>• <code>mouseenter</code> - 滑鼠進入</li>
+                        <li>• <code>mouseleave</code> - 滑鼠離開</li>
+                        <li>• <code>mousemove</code> - 滑鼠移動</li>
+                    </ul>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-purple-700 mb-2">鍵盤事件</h4>
+                    <ul class="text-sm space-y-1 text-gray-700">
+                        <li>• <code>keydown</code> - 按下按鍵</li>
+                        <li>• <code>keyup</code> - 放開按鍵</li>
+                        <li>• <code>keypress</code> - 按鍵（已廢棄）</li>
+                    </ul>
+                </div>
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-blue-700 mb-2">表單事件</h4>
+                    <ul class="text-sm space-y-1 text-gray-700">
+                        <li>• <code>submit</code> - 表單提交</li>
+                        <li>• <code>input</code> - 輸入變化（即時）</li>
+                        <li>• <code>change</code> - 內容改變</li>
+                        <li>• <code>focus</code> - 聚焦</li>
+                        <li>• <code>blur</code> - 失焦</li>
+                    </ul>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-green-700 mb-2">其他常用事件</h4>
+                    <ul class="text-sm space-y-1 text-gray-700">
+                        <li>• <code>load</code> - 載入完成</li>
+                        <li>• <code>resize</code> - 視窗大小改變</li>
+                        <li>• <code>scroll</code> - 滾動</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-2 border-pink-300 rounded-lg p-6 bg-pink-50">
+                <h3 class="font-bold text-lg mb-4">🎯 互動練習：事件遊樂場</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Click Counter -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h4 class="font-semibold text-lg mb-3">點擊計數器</h4>
+                        <div id="clickCount" class="text-4xl font-bold text-blue-600 mb-4 text-center">0</div>
+                        <button id="btnClick" class="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+                            點我！
+                        </button>
+                    </div>
+
+                    <!-- Mouse Tracker -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h4 class="font-semibold text-lg mb-3">滑鼠追蹤</h4>
+                        <div id="mouseTracker" class="bg-gray h-32 rounded-lg flex items-center justify-center text-gray-600 relative overflow-hidden">
+                            移動滑鼠
+                            <div id="mouseDot" class="absolute w-4 h-4 bg-red-500 rounded-full pointer-events-none hidden"></div>
+                        </div>
+                        <p id="mouseCoords" class="text-sm text-gray-600 mt-2 text-center">X: 0, Y: 0</p>
+                    </div>
+
+                    <!-- Keyboard Input -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h4 class="font-semibold text-lg mb-3">鍵盤輸入</h4>
+                        <input type="text" id="keyInput" placeholder="輸入文字..." class="w-full border-2 border-gray-300 rounded-lg px-4 py-2 mb-2">
+                        <div id="keyOutput" class="text-sm text-gray-600 bg-gray-50 p-3 rounded">字數: 0</div>
+                    </div>
+
+                    <!-- Hover Effect -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h4 class="font-semibold text-lg mb-3">Hover 效果</h4>
+                        <div id="hoverBox" class="bg-gray-200 h-32 rounded-lg flex items-center justify-center font-semibold text-gray-700 transition-all duration-300">
+                            把滑鼠移到這裡
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Event Object -->
+        <section class="bg-white rounded-xl shadow-md p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-orange-500 pb-2">
+                4. Event Object 事件物件
+            </h2>
+            <p class="text-gray-600 mb-6">當事件發生時，瀏覽器會自動建立一個 event 物件，包含事件的詳細資訊。</p>
+
+            <div class="bg-gray text-green-400 p-6 rounded-lg mb-6 font-mono text-sm overflow-x-auto">
+                <pre>button.addEventListener('click', function(event) {
+    // event 物件的常用屬性
+    console.log(event.type);        // 事件類型 (如 'click')
+    console.log(event.target);      // 觸發事件的元素
+    console.log(event.currentTarget); // 監聽事件的元素
+    console.log(event.timeStamp);   // 事件發生的時間戳
+
+    // 滑鼠事件專用
+    console.log(event.clientX);     // 滑鼠 X 座標
+    console.log(event.clientY);     // 滑鼠 Y 座標
+
+    // 鍵盤事件專用
+    console.log(event.key);         // 按下的鍵
+    console.log(event.code);        // 鍵碼
+
+    // 防止預設行為
+    event.preventDefault();
+
+    // 停止事件冒泡
+    event.stopPropagation();
+});</pre>
+            </div>
+
+            <div class="border-2 border-orange-300 rounded-lg p-6 bg-orange-50">
+                <h3 class="font-bold text-lg mb-4">🎯 試試看：Event 物件資訊</h3>
+                <button id="btnEventInfo" class="bg-orange-600 text-white px-6 py-3 rounded-lg hover:bg-orange-700 transition mb-4">
+                    點我查看 Event 物件
+                </button>
+                <div id="eventInfo" class="bg-white p-4 rounded-lg shadow font-mono text-sm hidden"></div>
+            </div>
+        </section>
+
+        <!-- Section 5: Practical Example -->
+        <section class="bg-gradient-to-r from-violet-50 to-purple-50 rounded-xl shadow-md p-8 mb-8 border-2 border-violet-300">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">
+                🎯 綜合實作：互動式顏色選擇器
+            </h2>
+            <p class="text-gray-600 mb-6">結合 DOM 操作與事件處理，建立一個實用的工具！</p>
+
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="font-bold text-lg mb-4">調整顏色</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">紅色 (R): <span id="rValue">128</span></label>
+                                <input type="range" id="rSlider" min="0" max="255" value="128" class="w-full">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">綠色 (G): <span id="gValue">128</span></label>
+                                <input type="range" id="gSlider" min="0" max="255" value="128" class="w-full">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">藍色 (B): <span id="bValue">128</span></label>
+                                <input type="range" id="bSlider" min="0" max="255" value="128" class="w-full">
+                            </div>
+                        </div>
+                        <div class="mt-6">
+                            <p class="font-semibold mb-2">RGB 值:</p>
+                            <div class="bg-gray p-3 rounded font-mono text-sm">
+                                rgb(<span id="rgbDisplay">128, 128, 128</span>)
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg mb-4">預覽</h3>
+                        <div id="colorPreview" class="w-full h-64 rounded-lg shadow-md border-4 border-gray-300 transition-colors duration-200" style="background-color: rgb(128, 128, 128);">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Reference -->
+        <section class="bg-gradient-to-r from-gray-800 to-gray-900 text-white rounded-xl shadow-md p-8">
+            <h2 class="text-3xl font-bold mb-6">📚 Quick Reference 快速參考</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-xl font-bold mb-3 text-violet-300">選取元素</h3>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">querySelector()</code> - CSS 選擇器（單一）</li>
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">querySelectorAll()</code> - CSS 選擇器（全部）</li>
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">getElementById()</code> - 用 ID 選取</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-3 text-violet-300">修改內容</h3>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">textContent</code> - 純文字</li>
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">innerHTML</code> - HTML 內容</li>
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">value</code> - 表單值</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-3 text-violet-300">修改樣式</h3>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">element.style.property</code> - 直接修改</li>
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">classList.add()</code> - 新增 class</li>
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">classList.toggle()</code> - 切換 class</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-3 text-violet-300">事件監聽</h3>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">addEventListener()</code> - 註冊事件</li>
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">event.target</code> - 觸發元素</li>
+                        <li><code class="bg-gray-700 px-2 py-1 rounded">event.preventDefault()</code> - 阻止預設</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- JavaScript Code -->
+    <script>
+        // Section 1: Element Selection Demo
+        document.getElementById('btnSelectById').addEventListener('click', function() {
+            const element = document.getElementById('demo-text');
+            const result = document.getElementById('selectResult');
+
+            result.classList.remove('hidden');
+            result.innerHTML = `
+                <strong>選取結果：</strong><br>
+                ID: demo-text<br>
+                內容: "${element.textContent}"<br>
+                標籤: ${element.tagName}
+            `;
+
+            element.classList.add('text-blue-600');
+            setTimeout(() => element.classList.remove('text-blue-600'), 1000);
+
+            console.log('選取的元素:', element);
+        });
+
+        document.getElementById('btnSelectByClass').addEventListener('click', function() {
+            const elements = document.querySelectorAll('.demo-item');
+            const result = document.getElementById('selectResult');
+
+            result.classList.remove('hidden');
+            result.innerHTML = `
+                <strong>選取結果：</strong><br>
+                找到 ${elements.length} 個元素<br>
+                內容: ${Array.from(elements).map(el => `"${el.textContent}"`).join(', ')}
+            `;
+
+            elements.forEach((el, i) => {
+                setTimeout(() => {
+                    el.style.transform = 'scale(1.1)';
+                    setTimeout(() => el.style.transform = 'scale(1)', 300);
+                }, i * 200);
+            });
+
+            console.log('選取的元素:', elements);
+        });
+
+        // Section 2: Text Manipulation
+        function changeTextContent() {
+            const el = document.getElementById('changeText');
+            el.textContent = '文字已改變1111！ (textContent)';
+        }
+
+        function changeHTML() {
+            const el = document.getElementById('changeText');
+            el.innerHTML = '<span class="text-red-600">紅色粗體文字</span> <em>(innerHTML)</em>';
+        }
+
+        function resetText() {
+            const el = document.getElementById('changeText');
+            el.textContent = '原始文字';
+        }
+
+        // Style Manipulation
+        const colors = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6'];
+        let colorIndex = 0;
+
+        function changeColor() {
+            const box = document.getElementById('styleBox');
+            box.style.backgroundColor = colors[colorIndex % colors.length];
+            box.style.color = 'white';
+            colorIndex++;
+        }
+
+        function changeBorder() {
+            const box = document.getElementById('styleBox');
+            box.style.border = '4px solid #10b981';
+            box.style.borderRadius = '20px';
+        }
+
+        function addShadow() {
+            const box = document.getElementById('styleBox');
+            box.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.3)';
+        }
+
+        function resetStyle() {
+            const box = document.getElementById('styleBox');
+            box.style = '';
+            box.className = 'bg-white p-8 rounded-lg shadow mb-4 text-center text-xl font-bold transition-all duration-300';
+        }
+
+        // Create/Remove Cards
+        let cardCount = 0;
+
+        function createCard() {
+            const title = document.getElementById('cardTitle').value.trim() || `卡片 ${++cardCount}`;
+            const container = document.getElementById('cardContainer');
+
+            const card = document.createElement('div');
+            card.className = 'bg-white p-6 rounded-lg shadow-md border-2 border-green-300 relative';
+            card.innerHTML = `
+                <h3 class="text-lg font-bold text-gray-800 mb-2">${title}</h3>
+                <p class="text-sm text-gray-600 mb-4">建立時間: ${new Date().toLocaleTimeString()}</p>
+                <button onclick="this.parentElement.remove()" class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-xs hover:bg-red-600">
+                    刪除
+                </button>
+            `;
+
+            container.appendChild(card);
+            document.getElementById('cardTitle').value = '';
+
+            console.log('新增卡片:', title);
+        }
+
+        function clearCards() {
+            const container = document.getElementById('cardContainer');
+            if (container.children.length > 0 && confirm('確定要清空所有卡片？')) {
+                container.innerHTML = '';
+                cardCount = 0;
+            }
+        }
+
+        // Section 3: Event Listeners
+        // Click Counter
+        let clickCount = 0;
+        document.getElementById('btnClick').addEventListener('click', function() {
+            clickCount++;
+            document.getElementById('clickCount').textContent = clickCount;
+
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => this.style.transform = 'scale(1)', 100);
+        });
+
+        // Mouse Tracker
+        const tracker = document.getElementById('mouseTracker');
+        const dot = document.getElementById('mouseDot');
+        const coords = document.getElementById('mouseCoords');
+
+        tracker.addEventListener('mouseenter', () => dot.classList.remove('hidden'));
+        tracker.addEventListener('mouseleave', () => dot.classList.add('hidden'));
+
+        tracker.addEventListener('mousemove', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            dot.style.left = x - 8 + 'px';
+            dot.style.top = y - 8 + 'px';
+            coords.textContent = `X: ${Math.round(x)}, Y: ${Math.round(y)}`;
+        });
+
+        // Keyboard Input
+        document.getElementById('keyInput').addEventListener('input', function(e) {
+            const text = e.target.value;
+            const output = document.getElementById('keyOutput');
+            output.innerHTML = `
+                字數: ${text.length}<br>
+                字元數: ${text.replace(/\s/g, '').length}<br>
+                最後輸入: "${e.data || '(刪除)'}"
+            `;
+        });
+
+        // Hover Effect
+        const hoverBox = document.getElementById('hoverBox');
+        hoverBox.addEventListener('mouseenter', function() {
+            this.style.backgroundColor = '#8b5cf6';
+            this.style.color = 'white';
+            this.style.transform = 'scale(1.05)';
+            this.textContent = '太棒了！ 🎉';
+        });
+
+        hoverBox.addEventListener('mouseleave', function() {
+            this.style.backgroundColor = '#e5e7eb';
+            this.style.color = '#374151';
+            this.style.transform = 'scale(1)';
+            this.textContent = '把滑鼠移到這裡';
+        });
+
+        // Section 4: Event Object Info
+        document.getElementById('btnEventInfo').addEventListener('click', function(event) {
+            const info = document.getElementById('eventInfo');
+            info.classList.remove('hidden');
+            info.innerHTML = `
+                <strong>Event 物件資訊：</strong><br><br>
+                type: "${event.type}"<br>
+                target: ${event.target.tagName}<br>
+                clientX: ${event.clientX}<br>
+                clientY: ${event.clientY}<br>
+                timeStamp: ${Math.round(event.timeStamp)} ms<br>
+                isTrusted: ${event.isTrusted}
+            `;
+
+            console.log('完整 Event 物件:', event);
+        });
+
+        // Section 5: Color Picker
+        const rSlider = document.getElementById('rSlider');
+        const gSlider = document.getElementById('gSlider');
+        const bSlider = document.getElementById('bSlider');
+        const preview = document.getElementById('colorPreview');
+
+        function updateColor() {
+            const r = rSlider.value;
+            const g = gSlider.value;
+            const b = bSlider.value;
+
+            document.getElementById('rValue').textContent = r;
+            document.getElementById('gValue').textContent = g;
+            document.getElementById('bValue').textContent = b;
+            document.getElementById('rgbDisplay').textContent = `${r}, ${g}, ${b}`;
+
+            preview.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+        }
+
+        rSlider.addEventListener('input', updateColor);
+        gSlider.addEventListener('input', updateColor);
+        bSlider.addEventListener('input', updateColor);
+
+        // Support Enter key for card creation
+        document.getElementById('cardTitle').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') createCard();
+        });
+
+        // Welcome message
+        console.log('%c🎉 歡迎來到 JavaScript DOM 與事件教學！', 'color: #8b5cf6; font-size: 20px; font-weight: bold;');
+        console.log('開始與頁面互動，並查看 Console 輸出！');
+    </script>
+</body>
+</html>
